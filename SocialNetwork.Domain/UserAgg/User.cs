@@ -5,6 +5,7 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using _00_Framework.Domain;
 using SocialNetwork.Domain.MessageAgg;
+using SocialNetwork.Domain.UserRelationAgg;
 
 namespace SocialNetwork.Domain.UserAgg
 {
@@ -88,48 +89,7 @@ namespace SocialNetwork.Domain.UserAgg
 
         #endregion
 
-        #region UserRelationMethods
-        /// <summary>
-        /// To request a friendship from this user to the Last Users
-        /// </summary>
-        /// <param name="fkUserBId"></param>
-        public void RequestFriendShip(long fkUserBId)
-        {
-            //ToDo:The check the validating things
-
-            //check if this Request is exist before (userA=this,UserB=fkUserBId)
-            
-            UserRelation relation = new UserRelation(this.Id, fkUserBId);
-
-            //add request to the relations list
-            UserBRelations.Add(relation);
-
-        }
-
-        public void AcceptFriendShip(long requestFromUserAFkId)
-        {
-            //Get the request friend ship with userA= the user that request Friendship(User A)
-            UserRelation relation =
-                UserARelations.FirstOrDefault(x => x.FkUserAId == requestFromUserAFkId && x.FkUserBId == this.Id);
-            //if there is that relation request (From UserA to UserB) Accept it
-            if(relation != null)
-                relation.AcceptRelation();
-
-        }
-
-
-        public void DeclineFriendShip(long requestFromUserAId)
-        { //Get the request friend ship with userA= the user that request Friendship(User A)
-            UserRelation relation =
-                UserARelations.FirstOrDefault(x => x.FkUserAId == requestFromUserAId && x.FkUserBId == this.Id);
-            //if there is that relation request (From UserA to UserB) Accept it
-            if (relation != null)
-                relation.AcceptRelation();
-
-        }
-
-
-        #endregion
+      
 
 
     }

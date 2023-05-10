@@ -1,6 +1,7 @@
 ﻿using _00_Framework.Domain;
+using SocialNetwork.Domain.UserAgg;
 
-namespace SocialNetwork.Domain.UserAgg
+namespace SocialNetwork.Domain.UserRelationAgg
 {
     public class UserRelation:EntityBase
     {
