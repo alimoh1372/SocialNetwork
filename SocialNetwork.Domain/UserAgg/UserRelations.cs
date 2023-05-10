@@ -3,7 +3,7 @@ using SocialNetwork.Domain.UserAgg;
 
 namespace SocialNetwork.Domain.UserRelationAgg
 {
-    public class UserRelation
+    public class UserRelation:EntityBase
     {
         public long FkUserAId { get; private set; }
         public User UserA { get; private set; }
@@ -26,6 +26,7 @@ namespace SocialNetwork.Domain.UserRelationAgg
             FkUserBId = fkUserBId;
             Approve = false;
         }
+
         /// <summary>
         /// Accepting The relation by User B
         /// </summary>

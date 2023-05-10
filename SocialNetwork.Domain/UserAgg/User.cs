@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using _00_Framework.Domain;
+using SocialNetwork.Domain.MessageAgg;
 using SocialNetwork.Domain.UserRelationAgg;
 
 namespace SocialNetwork.Domain.UserAgg
@@ -13,6 +14,8 @@ namespace SocialNetwork.Domain.UserAgg
     /// </summary>
     public class User:EntityBase
     {
+        #region MyRegion
+
         public string Name { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
@@ -21,7 +24,20 @@ namespace SocialNetwork.Domain.UserAgg
         public string Password { get; private set; }
         public string AboutMe { get; private set; }
         public string ProfilePicture { get; private set; }
-        public ICollection<UserRelation> UserRelations { get; private set; }
+
+        //To create self referencing many-to-many UserRelations
+        public ICollection<UserRelation> UserARelations { get; private set; }
+        public ICollection<UserRelation> UserBRelations { get; private set; }
+
+
+        //To  Create self referencing many-to-many message
+
+        public ICollection<Message> FromMessages { get; private set; }
+        public ICollection<Message> ToMessages { get; private set; }
+
+
+        #endregion
+
 
         #region UserMethods
         /// <summary>
@@ -82,35 +98,34 @@ namespace SocialNetwork.Domain.UserAgg
         {
             //ToDo:The check the validating things
 
-            //check if this Request is exist before
+            //check if this Request is exist before (userA=this,UserB=fkUserBId)
             
             UserRelation relation = new UserRelation(this.Id, fkUserBId);
 
             //add request to the relations list
-            UserRelations.Add(relation);
+            UserBRelations.Add(relation);
 
         }
 
-        public void AcceptFriendShip(long requestFromUserId)
+        public void AcceptFriendShip(long requestFromUserAFkId)
         {
             //Get the request friend ship with userA= the user that request Friendship(User A)
             UserRelation relation =
-                UserRelations.FirstOrDefault(x => x.FkUserAId == requestFromUserId && x.FkUserBId == this.Id);
-            //if there is that relation request Accept it
+                UserARelations.FirstOrDefault(x => x.FkUserAId == requestFromUserAFkId && x.FkUserBId == this.Id);
+            //if there is that relation request (From UserA to UserB) Accept it
             if(relation != null)
                 relation.AcceptRelation();
 
         }
 
 
-        public void DeclineFriendShip(long requestFromUserId)
-        {
-            //Get the request friend ship with userA= the user that request Friendship(User A)
+        public void DeclineFriendShip(long requestFromUserAId)
+        { //Get the request friend ship with userA= the user that request Friendship(User A)
             UserRelation relation =
-                UserRelations.FirstOrDefault(x => x.FkUserAId == requestFromUserId && x.FkUserBId == this.Id);
-            //if there is that relation request Accept it
+                UserARelations.FirstOrDefault(x => x.FkUserAId == requestFromUserAId && x.FkUserBId == this.Id);
+            //if there is that relation request (From UserA to UserB) Accept it
             if (relation != null)
-                relation.DeclineRelation();
+                relation.AcceptRelation();
 
         }
 
