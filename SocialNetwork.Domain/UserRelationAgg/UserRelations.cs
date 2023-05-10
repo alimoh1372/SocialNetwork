@@ -16,7 +16,7 @@ namespace SocialNetwork.Domain.UserRelationAgg
 
         #region UserMethods
         /// <summary>
-        /// Make the relation between User A and User B
+        /// Make the Request of relation from User A To User B
         /// </summary>
         /// <param name="fkUserAId">Id of user A</param>
         /// <param name="fkUserBId">Id of user B</param>
