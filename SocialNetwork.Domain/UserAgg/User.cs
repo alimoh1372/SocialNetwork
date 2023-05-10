@@ -14,7 +14,7 @@ namespace SocialNetwork.Domain.UserAgg
     /// </summary>
     public class User:EntityBase
     {
-        #region MyRegion
+        #region Properties
 
         public string Name { get; private set; }
         public string LastName { get; private set; }
@@ -39,7 +39,7 @@ namespace SocialNetwork.Domain.UserAgg
         #endregion
 
 
-        #region UserMethods
+        #region Methods
         /// <summary>
         /// Define A User
         /// </summary>
