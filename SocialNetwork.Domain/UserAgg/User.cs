@@ -5,7 +5,6 @@ using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 using _00_Framework.Domain;
 using SocialNetwork.Domain.MessageAgg;
-using SocialNetwork.Domain.UserRelationAgg;
 
 namespace SocialNetwork.Domain.UserAgg
 {
