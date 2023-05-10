@@ -23,6 +23,7 @@ namespace SocialNetwork.Application
                 return result.Failed(ApplicationMessage.Duplication);
             var user = new User(command.Name, command.LastName, command.Email, command.BirthDay, command.Password,
                 command.AboutMe, command.ProfilePicture);
+            _userRepository.Create(user);
             _userRepository.SaveChanges();
             return result.Succedded();
         }

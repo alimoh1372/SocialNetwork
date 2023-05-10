@@ -14,9 +14,10 @@ namespace SocialNetwork.Infrastructure.EfCore.Mapping
             //Specify the primary key
             builder.HasKey(x => x.Id);
 
+            
 
             //define property mapping
-            //ToDo:
+            
 
 
             //Define many-to-many self referencing with User

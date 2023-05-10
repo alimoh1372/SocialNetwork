@@ -22,6 +22,8 @@ namespace SocialNetwork.Domain.UserRelationAgg
         /// <param name="fkUserBId">Id of user B</param>
         public UserRelation(long fkUserAId, long fkUserBId)
         {
+            if (fkUserAId == fkUserBId)
+                return;
             FkUserAId = fkUserAId;
             FkUserBId = fkUserBId;
             Approve = false;

@@ -8,5 +8,6 @@
         public const string OperationFailed = "عملیات با شکست مواجه شد";
 
         public const string OperationSucceeded = "عملیات با موفقیت انجام شد";
+        public const string CantSelfRequest = "امکان انجام درخواست برای خود رکورد وجود ندارد.";
     }
 }
