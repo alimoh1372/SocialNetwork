@@ -23,7 +23,6 @@ namespace SocialNetwork.Infrastructure.EfCore.Mapping
 
 
             //Define a self referencing many to many with UserRelation entity
-
             builder.HasMany(x => x.UserARelations)
                 .WithOne(x => x.UserA)
                 .HasForeignKey(x => x.FkUserAId)
@@ -33,6 +32,17 @@ namespace SocialNetwork.Infrastructure.EfCore.Mapping
                 .WithOne(x => x.UserB)
                 .HasForeignKey(x => x.FkUserBId)
                 .OnDelete(DeleteBehavior.Restrict);
+
+
+            //Define a self referencing many to many with message
+            builder.HasMany(x => x.FromMessages)
+                .WithOne(x => x.FromUser)
+                .HasForeignKey(x => x.FkFromUserId);
+
+            builder.HasMany(x => x.ToMessages)
+                .WithOne(x => x.ToUser)
+                .HasForeignKey(x => x.FkToUserId);
+
 
 
             //Define an index to email 

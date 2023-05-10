@@ -47,7 +47,7 @@ namespace SocialNetwork.Domain.MessageAgg
             Like = true;
         }
 
-        public void UnLikeMessage()
+        public void UnLike()
         {
             Like = false;
         }
