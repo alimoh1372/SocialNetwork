@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="MessageAgg\" />
+    <Folder Include="UserRelationAgg\" />
     <Folder Include="UserAgg\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\00_Framework\00_Framework.csproj" />
   </ItemGroup>
 
 </Project>
