@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SocialNetwork", "SocialNetw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SN.Domain", "SN.Domain", "{B0FB7D61-3A04-4BD9-A08F-63C78D82A430}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Domain", "SocialNetwork.Domain\SocialNetwork.Domain.csproj", "{7794744E-3C6C-498E-8BC8-E4D88C84E1B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Domain", "SocialNetwork.Domain\SocialNetwork.Domain.csproj", "{7794744E-3C6C-498E-8BC8-E4D88C84E1B7}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1C5C8F65-1CD0-406C-8ED4-7810BC275E6D}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,19 +15,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentat
 		..\Task The Currency Convertor\Documantation1\Documentation Excell.xlsx = ..\Task The Currency Convertor\Documantation1\Documentation Excell.xlsx
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "00_Framework", "00_Framework\00_Framework.csproj", "{6EDD259D-E3B8-46CB-8A56-C1ABF546C82A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "00_Framework", "00_Framework\00_Framework.csproj", "{6EDD259D-E3B8-46CB-8A56-C1ABF546C82A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SN.Application", "SN.Application", "{621E9587-E90D-4C26-A4D1-5F399750B1FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Application.Contracts", "SocialNetwork.Application.Contracts\SocialNetwork.Application.Contracts.csproj", "{132958E5-8E36-4382-A1B7-E8732637B6B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Application.Contracts", "SocialNetwork.Application.Contracts\SocialNetwork.Application.Contracts.csproj", "{132958E5-8E36-4382-A1B7-E8732637B6B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Application", "SocialNetwork.Application\SocialNetwork.Application.csproj", "{071D0124-19DC-4C3C-AF31-AC54C9AB02EA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Application", "SocialNetwork.Application\SocialNetwork.Application.csproj", "{071D0124-19DC-4C3C-AF31-AC54C9AB02EA}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SN.Infrastructure", "SN.Infrastructure", "{A4BABDF2-1C93-423F-835B-5E0000327238}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Infrastructure.Configuration", "SocialNetwork.Infrastructure.Configuration\SocialNetwork.Infrastructure.Configuration.csproj", "{EA37F1D7-A9BA-4CF1-B9A4-C0C9B938A8E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Infrastructure.Configuration", "SocialNetwork.Infrastructure.Configuration\SocialNetwork.Infrastructure.Configuration.csproj", "{EA37F1D7-A9BA-4CF1-B9A4-C0C9B938A8E1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocialNetwork.Infrustructure.EfCore", "SocialNetwork.Infrustructure.EfCore\SocialNetwork.Infrustructure.EfCore.csproj", "{510AF820-594C-4B40-A633-6252F0C8FE24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Infrastructure.EfCore", "SocialNetwork.Infrustructure.EfCore\SocialNetwork.Infrastructure.EfCore.csproj", "{510AF820-594C-4B40-A633-6252F0C8FE24}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHosts", "ServiceHosts\ServiceHosts.csproj", "{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{510AF820-594C-4B40-A633-6252F0C8FE24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{510AF820-594C-4B40-A633-6252F0C8FE24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{510AF820-594C-4B40-A633-6252F0C8FE24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

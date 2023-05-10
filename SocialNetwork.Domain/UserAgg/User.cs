@@ -12,18 +12,18 @@ namespace SocialNetwork.Domain.UserAgg
     /// <summary>
     /// User Entity to handling the user operations
     /// </summary>
-    public class User:EntityBase
+    public class User : EntityBase
     {
         #region Properties
 
         public string Name { get; private set; }
         public string LastName { get; private set; }
         public string Email { get; private set; }
-
         public DateTime BirthDay { get; private set; }
         public string Password { get; private set; }
         public string AboutMe { get; private set; }
         public string ProfilePicture { get; private set; }
+
 
         //To create self referencing many-to-many UserRelations
         public ICollection<UserRelation> UserARelations { get; private set; }
@@ -31,7 +31,6 @@ namespace SocialNetwork.Domain.UserAgg
 
 
         //To  Create self referencing many-to-many message
-
         public ICollection<Message> FromMessages { get; private set; }
         public ICollection<Message> ToMessages { get; private set; }
 
@@ -89,7 +88,7 @@ namespace SocialNetwork.Domain.UserAgg
 
         #endregion
 
-      
+
 
 
     }

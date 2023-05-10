@@ -30,6 +30,7 @@ namespace SocialNetwork.Application.Contracts.UserContracts
         [Required]
         [DataType(DataType.Password)]
         [StringLength(30)]
+        [MinLength(4)]
         public string Password { get;  set; }
 
         [Required]
