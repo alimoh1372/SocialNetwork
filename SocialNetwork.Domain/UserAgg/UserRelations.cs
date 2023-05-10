@@ -13,6 +13,8 @@ namespace SocialNetwork.Domain.UserRelationAgg
 
 
         public bool Approve { get; private set; }
+
+        #region UserMethods
         /// <summary>
         /// Make the relation between User A and User B
         /// </summary>
@@ -39,6 +41,10 @@ namespace SocialNetwork.Domain.UserRelationAgg
         {
             Approve = false;
         }
-        
+
+
+        #endregion
+
+
     }
 }
