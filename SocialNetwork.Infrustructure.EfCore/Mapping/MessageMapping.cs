@@ -19,11 +19,13 @@ namespace SocialNetwork.Infrastructure.EfCore.Mapping
 
             builder.HasOne(x => x.FromUser)
                 .WithMany(x => x.FromMessages)
-                .HasForeignKey(x => x.FkFromUserId);
+                .HasForeignKey(x => x.FkFromUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             builder.HasOne(x => x.ToUser)
                 .WithMany(x => x.ToMessages)
-                .HasForeignKey(x => x.FkToUserId);
+                .HasForeignKey(x => x.FkToUserId)
+                .OnDelete(DeleteBehavior.NoAction);
 
 
             //design index for user a and b

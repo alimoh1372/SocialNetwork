@@ -29,7 +29,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Infrastructure.EfCore", "SocialNetwork.Infrustructure.EfCore\SocialNetwork.Infrastructure.EfCore.csproj", "{510AF820-594C-4B40-A633-6252F0C8FE24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceHosts", "ServiceHosts\ServiceHosts.csproj", "{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceHosts", "ServiceHosts\ServiceHosts.csproj", "{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_SocialNetworkQuery", "01_SocialNetworkQuery\01_SocialNetworkQuery.csproj", "{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,6 +67,10 @@ Global
 		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
