@@ -11,7 +11,7 @@ h2 {
 }
 
 h3 > span {
-    border-bottom: 2px solid #C2C2C2;
+    border-bottom: 2px solid #c2c2c2;
     display: inline-block;
     padding: 0 5px 5px;
 }
@@ -51,7 +51,7 @@ h3 > span {
     }
 
 #user-profile .profile-stars {
-    color: #FABA03;
+    color: #faba03;
     padding: 7px 0;
     text-align: center;
 }
@@ -97,7 +97,7 @@ h3 > span {
 }
 
     #user-profile .profile-header > h3 {
-        margin-top: 10px
+        margin-top: 10px;
     }
 
     #user-profile .profile-header .edit-profile {
@@ -120,7 +120,10 @@ h3 > span {
         padding: 4px 0;
     }
 
-        #user-profile .profile-user-info .profile-user-details .profile-user-details-label {
+        #user-profile
+        .profile-user-info
+        .profile-user-details
+        .profile-user-details-label {
             width: 110px;
             float: left;
             bottom: 0;
@@ -133,7 +136,10 @@ h3 > span {
             padding-top: 4px;
         }
 
-        #user-profile .profile-user-info .profile-user-details .profile-user-details-value {
+        #user-profile
+        .profile-user-info
+        .profile-user-details
+        .profile-user-details-value {
             margin-left: 120px;
         }
 
@@ -146,13 +152,19 @@ h3 > span {
     }
 
 @media only screen and (max-width: 767px) {
-    #user-profile .profile-user-info .profile-user-details .profile-user-details-label {
+    #user-profile
+    .profile-user-info
+    .profile-user-details
+    .profile-user-details-label {
         float: none;
         position: relative;
         text-align: left;
     }
 
-    #user-profile .profile-user-info .profile-user-details .profile-user-details-value {
+    #user-profile
+    .profile-user-info
+    .profile-user-details
+    .profile-user-details-value {
         margin-left: 0;
     }
 
@@ -173,14 +185,13 @@ h3 > span {
     }
 }
 
-
 .main-box {
-    background: #FFFFFF;
-    -webkit-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    -moz-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    -o-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    -ms-box-shadow: 1px 1px 2px 0 #CCCCCC;
-    box-shadow: 1px 1px 2px 0 #CCCCCC;
+    background: #ffffff;
+    -webkit-box-shadow: 1px 1px 2px 0 #cccccc;
+    -moz-box-shadow: 1px 1px 2px 0 #cccccc;
+    -o-box-shadow: 1px 1px 2px 0 #cccccc;
+    -ms-box-shadow: 1px 1px 2px 0 #cccccc;
+    box-shadow: 1px 1px 2px 0 #cccccc;
     margin-bottom: 16px;
     padding: 20px;
 }
@@ -227,7 +238,7 @@ h3 > span {
     }
 
     .btn-default .caret {
-        border-top-color: #FFFFFF;
+        border-top-color: #ffffff;
     }
 
 .btn-info {
@@ -313,7 +324,7 @@ h3 > span {
 
         .icon-box .btn:hover {
             background-color: #eee;
-            color: #2BB6A3;
+            color: #2bb6a3;
         }
 
 a {
@@ -326,7 +337,6 @@ a {
         color: #2bb6a3;
     }
 
-
 /* TABLES */
 .table {
     border-collapse: separate;
@@ -338,7 +348,7 @@ a {
 }
 
 .table thead > tr > th {
-    border-bottom: 1px solid #C2C2C2;
+    border-bottom: 1px solid #c2c2c2;
     padding-bottom: 0;
 }
 
@@ -356,7 +366,7 @@ a {
     }
 
 .table thead > tr > th span {
-    border-bottom: 2px solid #C2C2C2;
+    border-bottom: 2px solid #c2c2c2;
     display: inline-block;
     padding: 0 5px;
     padding-bottom: 5px;
@@ -368,7 +378,7 @@ a {
 }
 
     .table thead > tr > th > a span:after {
-        content: "\f0dc";
+        content: '\f0dc';
         font-family: FontAwesome;
         font-style: normal;
         font-weight: normal;
@@ -378,11 +388,11 @@ a {
     }
 
 .table thead > tr > th > a.asc span:after {
-    content: "\f0dd";
+    content: '\f0dd';
 }
 
 .table thead > tr > th > a.desc span:after {
-    content: "\f0de";
+    content: '\f0de';
 }
 
 .table thead > tr > th > a:hover span {
@@ -514,8 +524,8 @@ a {
 }
 
 .daterange-filter {
-    background: none repeat scroll 0 0 #FFFFFF;
-    border: 1px solid #CCCCCC;
+    background: none repeat scroll 0 0 #ffffff;
+    border: 1px solid #cccccc;
     cursor: pointer;
     padding: 5px 10px;
 }
@@ -543,7 +553,7 @@ a {
 @media only screen and (max-width: 440px) {
     .filter-block {
         float: none !important;
-        clear: both
+        clear: both;
     }
 
         .filter-block .form-group {
@@ -564,7 +574,6 @@ a {
         margin-bottom: 15px;
     }
 }
-
 
 .tabs-wrapper .tab-content {
     margin-bottom: 20px;
@@ -619,7 +628,6 @@ a {
                     color: #8dc859;
                 }
 
-
 /* CONVERSATION */
 .conversation-inner {
     padding: 0 0 5px 0;
@@ -653,7 +661,7 @@ a {
         border-color: transparent #f5f5f5 transparent transparent;
         border-style: solid;
         border-width: 6px;
-        content: "";
+        content: '';
         cursor: pointer;
         left: -12px;
         position: absolute;
@@ -695,7 +703,7 @@ a {
 }
 
     .conversation-body > .time:before {
-        content: "\f017";
+        content: '\f017';
         font-family: FontAwesome;
         font-style: normal;
         font-weight: normal;
@@ -721,12 +729,4 @@ textarea.form-control {
     border-color: #e1e1e1;
     box-shadow: none;
     -webkit-box-shadow: none;
-}
-
-.footer {
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    white-space: nowrap;
-    line-height: 60px; /* Vertically center the text there */
 }
