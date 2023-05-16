@@ -15,17 +15,17 @@ namespace SocialNetwork.Application.Contracts.UserContracts
 
        Task<List<UserViewModel>> SearchAsync(SearchModel searchModel);
 
+
+       OperationResult Login(Login command);
+       void Logout();
+      
     }
 
-    public class SearchModel
-    {
-        public string Email { get; set; }
-    }
+   
 
-    public class UserViewModel
+    public class Login
     {
-        public long Id { get; set; }
-        public string Email { get; set; }
-        public string ProfilePicture { get; set; }
+        public string UserName { get; set; }
+        public string Password { get; set; }
     }
 }

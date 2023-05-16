@@ -19,7 +19,6 @@ namespace SocialNetwork.Infrastructure.Configuration
         {
             services.AddTransient<IUserRepository,UserRepository>();
             services.AddTransient<IUserApplication, UserApplication>();
-
             services.AddDbContext<SocialNetworkContext>(x => x.UseSqlServer(connectionString));
         }
     }

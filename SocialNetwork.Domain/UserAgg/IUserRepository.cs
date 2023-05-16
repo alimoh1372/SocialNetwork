@@ -10,6 +10,6 @@ namespace SocialNetwork.Domain.UserAgg
         EditUser GetDetails(long id);
 
         Task<List<UserViewModel>> SearchAsync(SearchModel searchModel);
-
+        User GetBy(string userName);
     }
 }

@@ -6,8 +6,8 @@
 
         public const string NotFound = "موردی با مشخصات  درخواستی یافت نشد.";
         public const string OperationFailed = "عملیات با شکست مواجه شد";
-
-        public const string OperationSucceeded = "عملیات با موفقیت انجام شد";
-        public const string CantSelfRequest = "امکان انجام درخواست برای خود رکورد وجود ندارد.";
+        public static string PasswordsNotMatch = "پسورد و تکرار آن با هم مطابقت ندارند";
+        public static string WrongUserPass = "نام کاربری یا کلمه رمز اشتباه است";
+        public static string CantSelfRequest = "امکان درخواست دوستی به خود نمیباشد";
     }
 }

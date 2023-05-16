@@ -42,5 +42,11 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
             return  query.ToListAsync();
 
         }
+
+        public User GetBy(string userName)
+        {
+         var user=_context.Users.FirstOrDefault(x => x.Email == userName);
+         return  user;
+        }
     }
 }

@@ -9,54 +9,59 @@ namespace SocialNetwork.Application
     public class UserApplication:IUserApplication
     {
         private readonly IUserRepository _userRepository;
-
-        public UserApplication(IUserRepository userRepository)
+        private readonly IPasswordHasher _passwordHasher;
+        private readonly IAuthHelper _authHelper;
+        public UserApplication(IUserRepository userRepository, IPasswordHasher passwordHasher, IAuthHelper authHelper)
         {
             _userRepository = userRepository;
+            _passwordHasher = passwordHasher;
+            _authHelper = authHelper;
         }
 
         public OperationResult Create(CreateUser command)
         {
-            var result = new OperationResult();
-            //check if user with same email is exist return fail message;
+            var operation = new OperationResult();
+
             if (_userRepository.IsExists(x => x.Email == command.Email))
-                return result.Failed(ApplicationMessage.Duplication);
-            var user = new User(command.Name, command.LastName, command.Email, command.BirthDay, command.Password,
-                command.AboutMe, command.ProfilePicture);
-            _userRepository.Create(user);
+                return operation.Failed(ApplicationMessage.Duplication);
+
+            var password = _passwordHasher.Hash(command.Password);
+            var account = new User(command.Name, command.LastName, command.Email, command.BirthDay, command.Password,
+                command.AboutMe, "~/Images/DefaultProfile.png");
+            _userRepository.Create(account);
             _userRepository.SaveChanges();
-            return result.Succedded();
+            return operation.Succedded();
         }
 
         public OperationResult Edit(EditUser command)
         {
-            var result = new OperationResult();
-            
-            var user = _userRepository.Get(command.Id);
-            //check if user not found return failed operation result
-            if (user == null)
-                return result.Failed(ApplicationMessage.NotFound);
-            
-            user.Edit(command.Name,command.LastName,command.AboutMe,command.ProfilePicture);
 
+            var operation = new OperationResult();
+            var user = _userRepository.Get(command.Id);
+            if (user == null)
+                return operation.Failed(ApplicationMessage.NotFound);
+
+
+            
+            user.Edit(command.Name,command.LastName,command.AboutMe, "~/Images/DefaultProfile.png");
             _userRepository.SaveChanges();
-            return result.Succedded();
+            return operation.Succedded();
         }
 
         public OperationResult ChangePassword(ChangePassword command)
         {
-            var result = new OperationResult();
-
+            var operation = new OperationResult();
             var user = _userRepository.Get(command.Id);
-
-            //check if user not found return failed operation result
             if (user == null)
-                return result.Failed(ApplicationMessage.NotFound);
+                return operation.Failed(ApplicationMessage.NotFound);
 
-            user.ChangePassword(command.Password);
+            if (command.Password != command.ConfirmPassword)
+                return operation.Failed(ApplicationMessage.PasswordsNotMatch);
 
+            var password = _passwordHasher.Hash(command.Password);
+            user.ChangePassword(password);
             _userRepository.SaveChanges();
-            return result.Succedded();
+            return operation.Succedded();
         }
 
         public EditUser GetDetails(long id)
@@ -68,5 +73,32 @@ namespace SocialNetwork.Application
         {
             return _userRepository.SearchAsync(searchModel);
         }
+
+        public  OperationResult Login(Login command)
+        {
+            var operation = new OperationResult();
+            var user = _userRepository.GetBy(command.UserName);
+            if (user == null)
+                return  operation.Failed(ApplicationMessage.WrongUserPass);
+
+            var result = _passwordHasher.Check(user.Password, command.Password);
+            if (!result.Verified  )
+                return operation.Failed(ApplicationMessage.WrongUserPass);
+
+
+
+            var authViewModel = new AuthViewModel(user.Id, user.Email);
+
+            _authHelper.Signin(authViewModel);
+
+            return operation.Succedded();
+        }
+
+        public void Logout()
+        {
+            _authHelper.SignOut();
+        }
+
+        
     }
 }

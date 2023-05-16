@@ -1,4 +1,6 @@
-﻿namespace _00_Framework.Application
+﻿using System;
+
+namespace _00_Framework.Application
 {
     public class OperationResult
     {
@@ -22,6 +24,10 @@
             IsSuccedded = false;
             Message = message;
             return this;
+        }
+        public OperationResult Failed(object passwordsNotMatch)
+        {
+            throw new NotImplementedException();
         }
     }
 }
