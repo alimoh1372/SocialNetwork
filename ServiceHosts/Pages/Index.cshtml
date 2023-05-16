@@ -1,76 +1,58 @@
 ﻿@page
 @model IndexModel
-@{
-    ViewData["Title"] = "Home page";
-}
 
 @{
     ViewData["Title"] = "Login / Sign Up";
 }
+@section Styles
+{
+    <link rel="stylesheet" href="~/css/LoginStyle.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+}
+<div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
 
-<div class="breadcrumb-area section-space--half">
-    <div class="container wide">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="breadcrumb-wrapper breadcrumb-bg">
-                    <div class="breadcrumb-content">
-                        <h2 class="tit">Login / Sign Up</h2>
-                        <ul class="breadcrumb-content__page-map">
-                            <li><a asp-page="/Index">صفحه اصلی</a></li>
-                            <li class="active">ورود - ثبت نام</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="signup">
+        @if (Model.RegisterMessage != null)
+        {
+            <div class="alert alert-danger">@Model.RegisterMessage</div>
+        }
+        <form method="post" asp-page-handler="Register">
+            <label for="chk" aria-hidden="true">Sign up</label>
+            <input type="text" name="Name" placeholder="Enter First Name" required="">
+            <input type="text" name="LastName" placeholder="Enter Last name" required="">
+            <input type="email" name="Email" placeholder="Enter Email it is your UserName and dont immutable" required="">
+            <input type="date" name="BirthDay" placeholder="EnterYour birthDay">
+            <textarea name="AboutMe" rows="3" placeholder="Enter about yourself"></textarea>
+            <input type="password" name="password" placeholder="Password" required="">
+            <input type="password" name="ConfirmPassword" placeholder="Confirm your password">
+            <button>Sign up</button>
+        </form>
     </div>
+
+    <div class="login">
+        @if (Model.LoginMessage != null)
+        {
+            <div class="alert alert-danger">@Model.LoginMessage</div>
+        }
+        <form method="post" asp-page-handler="Login">
+            <label for="chk" aria-hidden="true">Login</label>
+            <input type="email" name="username" placeholder="Email/UserName" required="required">
+            <input type="password" name="password" placeholder="Password" required="required">
+            <button>Login</button>
+        </form>
+    </div>
+
 </div>
 
-<div class="page-content-area">
+
+@*<div class="page-content-area">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="page-wrapper">
                     <div class="page-content-wrapper">
                         <div class="row">
-                            <div class="col-sm-12 col-md-12 col-xs-12 col-lg-6">
-                                @if (Model.LoginMessage != null)
-                                {
-                                    <div class="alert alert-danger">@Model.LoginMessage</div>
-                                }
-                                <form method="post" asp-page-handler="Login">
-                                    <div class="login-form">
-                                        <h4 class="login-title">Login</h4>
-                                        <div class="row">
-                                            <div class="col-md-12 col-12">
-                                                <label>UserName</label>
-                                                <input type="text" name="username" placeholder="UserName">
-                                            </div>
-                                            <div class="col-12">
-                                                <label>Password</label>
-                                                <input type="password" name="password" placeholder="Enter Password">
-                                            </div>
-
-                                            @*<div class="col-sm-6">
-                                                    <div class="check-box d-inline-block ml-0 ml-md-2">
-                                                        <input type="checkbox" id="remember_me">
-                                                        <label for="remember_me">Remember me</label>
-                                                    </div>
-                                                </div>*@
-
-                                            @*<div class="col-sm-6 text-left text-sm-right">
-                                                <a href="#" class="forget-pass-link">رمز را فراموش کرده اید؟</a>
-                                            </div>*@
-
-                                            <div class="col-md-12">
-                                                <button class="register-button">Login</button>
-                                            </div>
-
-                                        </div>
-                                    </div>
-
-                                </form>
-                            </div>
                             <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
                                 @if (Model.RegisterMessage != null)
                                 {
@@ -123,5 +105,5 @@
             </div>
         </div>
     </div>
-</div>
+</div>*@
 

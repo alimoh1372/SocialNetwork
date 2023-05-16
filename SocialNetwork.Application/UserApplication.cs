@@ -26,7 +26,7 @@ namespace SocialNetwork.Application
                 return operation.Failed(ApplicationMessage.Duplication);
 
             var password = _passwordHasher.Hash(command.Password);
-            var account = new User(command.Name, command.LastName, command.Email, command.BirthDay, command.Password,
+            var account = new User(command.Name, command.LastName, command.Email, command.BirthDay,password,
                 command.AboutMe, "~/Images/DefaultProfile.png");
             _userRepository.Create(account);
             _userRepository.SaveChanges();

@@ -16,7 +16,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Mapping
             builder.Property(x => x.LastName).IsRequired().HasMaxLength(255);
             builder.Property(x => x.Email).IsRequired().HasMaxLength(500);
             builder.Property(x => x.BirthDay).IsRequired();
-            builder.Property(x => x.Password).IsRequired().HasMaxLength(30);
+            builder.Property(x => x.Password).IsRequired().HasMaxLength(1000);
             builder.Property(x => x.AboutMe).IsRequired().HasMaxLength(2000);
             builder.Property(x => x.ProfilePicture).IsRequired().HasMaxLength(2000);
             
