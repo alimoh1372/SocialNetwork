@@ -99,6 +99,9 @@ namespace SocialNetwork.Application
             _authHelper.SignOut();
         }
 
-        
+        public Task<UserViewModel> GetUserInfoAsyncBy(long id)
+        {
+           return _userRepository.GetUserInfoAsyncBy(id);
+        }
     }
 }

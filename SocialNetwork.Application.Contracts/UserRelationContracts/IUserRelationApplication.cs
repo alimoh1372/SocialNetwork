@@ -1,4 +1,5 @@
-﻿using _00_Framework.Application;
+﻿using System.Collections.Generic;
+using _00_Framework.Application;
 
 namespace SocialNetwork.Application.Contracts.UserRelationContracts
 {
@@ -21,6 +22,8 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         /// <param name="id"></param>
         /// <returns></returns>
         OperationResult Decline(long id);
+
+        List<UserWithRequestStatusVieModel> GetAllUserWithRequestStatus(long currentUserId);
 
     }
 }

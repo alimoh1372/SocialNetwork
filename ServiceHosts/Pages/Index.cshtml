@@ -9,19 +9,24 @@
     <link rel="stylesheet" href="~/css/LoginStyle.css">
     <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
 }
+
 <div class="main">
     <input type="checkbox" id="chk" aria-hidden="true">
-
+   
     <div class="signup">
-        @if (Model.RegisterMessage != null)
-        {
-            <div class="alert alert-danger">@Model.RegisterMessage</div>
-        }
         <form method="post" asp-page-handler="Register">
             <label for="chk" aria-hidden="true">Sign up</label>
+            @if (Model.RegisterMessage != null)
+            {
+                <div class="alert alert-danger">@Model.RegisterMessage</div>
+            }
+            @if (Model.LoginMessage != null)
+            {
+                <div class="alert alert-danger">@Model.LoginMessage</div>
+            }
             <input type="text" name="Name" placeholder="Enter First Name" required="">
             <input type="text" name="LastName" placeholder="Enter Last name" required="">
-            <input type="email" name="Email" placeholder="Enter Email it is your UserName and dont immutable" required="">
+            <input type="email" name="Email" placeholder="Enter Email it is your FullName and dont immutable" required="">
             <input type="date" name="BirthDay" placeholder="EnterYour birthDay">
             <textarea name="AboutMe" rows="3" placeholder="Enter about yourself"></textarea>
             <input type="password" name="password" placeholder="Password" required="">
@@ -29,15 +34,10 @@
             <button>Sign up</button>
         </form>
     </div>
-
     <div class="login">
-        @if (Model.LoginMessage != null)
-        {
-            <div class="alert alert-danger">@Model.LoginMessage</div>
-        }
         <form method="post" asp-page-handler="Login">
             <label for="chk" aria-hidden="true">Login</label>
-            <input type="email" name="username" placeholder="Email/UserName" required="required">
+            <input type="email" name="username" placeholder="Email/FullName" required="required">
             <input type="password" name="password" placeholder="Password" required="required">
             <button>Login</button>
         </form>
@@ -45,65 +45,4 @@
 
 </div>
 
-
-@*<div class="page-content-area">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="page-wrapper">
-                    <div class="page-content-wrapper">
-                        <div class="row">
-                            <div class="col-sm-12 col-md-12 col-lg-6 col-xs-12">
-                                @if (Model.RegisterMessage != null)
-                                {
-                                    <div class="alert alert-danger">@Model.RegisterMessage</div>
-                                }
-                                <form method="post" asp-page-handler="Register">
-
-                                    <div class="login-form">
-                                        <h4 class="login-title">Sign Up</h4>
-
-                                        <div class="row">
-                                            <div class="col-md-4 col-12 mb-20">
-                                                <label>Name</label>
-                                                <input type="text" name="Name" placeholder="Enter First Name">
-                                            </div>
-                                            <div class="col-md-4 col-12 mb-20">
-                                                <label>LastName</label>
-                                                <input type="text" name="LastName" placeholder="Enter Last name">
-                                            </div>
-                                            <div class="col-md-4 col-12 mb-20">
-                                                <label>User Name/Email</label>
-                                                <input type="email" name="Email" placeholder="Enter Email it is your UserName">
-                                            </div>
-                                            <div class="col-md-12 mb-20">
-                                                <label>BirthDay</label>
-                                                <input type="date" name="BirthDay" placeholder="EnterYour birthDay">
-                                            </div>
-                                            <div class="col-md-12 mb-20">
-                                                <label>About You</label>
-                                                <textarea name="AboutMe"></textarea>
-                                            </div>
-                                            <div class="col-md-6 mb-20">
-                                                <label>Password</label>
-                                                <input type="password" name="password" placeholder="Password">
-                                            </div>
-                                            <div class="col-md-6 mb-20">
-                                                <label>Confirm password</label>
-                                                <input type="password" name="rePassword" placeholder="Confirm">
-                                            </div>
-                                            <div class="col-12">
-                                                <button class="register-button mt-0">Register</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>*@
 

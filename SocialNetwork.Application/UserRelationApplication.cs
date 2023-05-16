@@ -1,4 +1,5 @@
-﻿using _00_Framework.Application;
+﻿using System.Collections.Generic;
+using _00_Framework.Application;
 using SocialNetwork.Application.Contracts.UserRelationContracts;
 using SocialNetwork.Domain.UserRelationAgg;
 
@@ -67,6 +68,11 @@ namespace SocialNetwork.Application
             _userRelationRepository.SaveChanges();
 
             return result.Succedded();
+        }
+
+        public List<UserWithRequestStatusVieModel> GetAllUserWithRequestStatus(long currentUserId)
+        {
+            return _userRelationRepository.GetAllUserWithRequestStatus(currentUserId);
         }
     }
 }

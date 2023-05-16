@@ -11,5 +11,6 @@ namespace SocialNetwork.Domain.UserAgg
 
         Task<List<UserViewModel>> SearchAsync(SearchModel searchModel);
         User GetBy(string userName);
+        Task<UserViewModel> GetUserInfoAsyncBy(long id);
     }
 }

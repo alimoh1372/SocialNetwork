@@ -18,7 +18,8 @@ namespace SocialNetwork.Application.Contracts.UserContracts
 
        OperationResult Login(Login command);
        void Logout();
-      
+
+       Task<UserViewModel> GetUserInfoAsyncBy(long id);
     }
 
    

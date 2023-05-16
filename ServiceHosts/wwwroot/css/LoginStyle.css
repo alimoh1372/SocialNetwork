@@ -17,6 +17,17 @@ body{
 	border-radius: 10px;
 	box-shadow: 5px 20px 50px #000;
 }
+.alert {
+	width: 80%;
+	height: 30px;
+    justify-content: center;
+    display: flex;
+    margin: 20px auto;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}
 #chk{
 	display: none;
 }

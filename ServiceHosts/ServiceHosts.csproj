@@ -12,6 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\01_SocialNetworkQuery\01_SocialNetworkQuery.csproj" />
     <ProjectReference Include="..\SocialNetwork.Infrastructure.Configuration\SocialNetwork.Infrastructure.Configuration.csproj" />
   </ItemGroup>
 

@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using _01_SocialNetworkQuery.Contract;
+using _01_SocialNetworkQuery.Implementation;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SocialNetwork.Application;
 using SocialNetwork.Application.Contracts.UserContracts;
@@ -19,6 +21,7 @@ namespace SocialNetwork.Infrastructure.Configuration
         {
             services.AddTransient<IUserRepository,UserRepository>();
             services.AddTransient<IUserApplication, UserApplication>();
+            services.AddTransient<IUserQuery, UserQuery>();
             services.AddDbContext<SocialNetworkContext>(x => x.UseSqlServer(connectionString));
         }
     }

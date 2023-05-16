@@ -48,5 +48,16 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
          var user=_context.Users.FirstOrDefault(x => x.Email == userName);
          return  user;
         }
+
+        public  Task<UserViewModel> GetUserInfoAsyncBy(long id)
+        {
+            return  _context.Users.Select(x => new UserViewModel
+            {
+                Id = x.Id,
+                Email = x.Email,
+                ProfilePicture = x.ProfilePicture,
+                AboutMe = x.AboutMe
+            }).FirstOrDefaultAsync(x => x.Id == id);
+        }
     }
 }
