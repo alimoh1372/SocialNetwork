@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using _00_Framework.Application;
 using SocialNetwork.Application.Contracts.UserRelationContracts;
 using SocialNetwork.Domain.UserRelationAgg;
@@ -70,9 +71,9 @@ namespace SocialNetwork.Application
             return result.Succedded();
         }
 
-        public List<UserWithRequestStatusVieModel> GetAllUserWithRequestStatus(long currentUserId)
+        public async Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId)
         {
-            return _userRelationRepository.GetAllUserWithRequestStatus(currentUserId);
+            return await _userRelationRepository.GetAllUserWithRequestStatus(currentUserId);
         }
     }
 }

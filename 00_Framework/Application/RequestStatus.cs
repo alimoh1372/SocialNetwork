@@ -3,7 +3,11 @@
     public enum RequestStatus
     {
         WithoutRequest = 0,
-        RequestSent = 1,
-        RequestAccepted
+        RequestPending = 1,
+        RequestAccepted=2,
+        RevertRequestPending=3,
+        RevertRequestAccepted=4,
+        ErrorWithRelationNumbers=5,
+        UnknownError=6
     }
 }

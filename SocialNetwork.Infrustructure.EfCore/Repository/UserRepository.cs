@@ -55,6 +55,8 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
             {
                 Id = x.Id,
                 Email = x.Email,
+                Name=x.Name,
+                LastName=x.LastName,
                 ProfilePicture = x.ProfilePicture,
                 AboutMe = x.AboutMe
             }).FirstOrDefaultAsync(x => x.Id == id);

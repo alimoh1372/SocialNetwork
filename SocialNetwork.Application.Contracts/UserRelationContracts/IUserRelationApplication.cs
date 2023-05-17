@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using _00_Framework.Application;
 
 namespace SocialNetwork.Application.Contracts.UserRelationContracts
@@ -23,7 +24,7 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         /// <returns></returns>
         OperationResult Decline(long id);
 
-        List<UserWithRequestStatusVieModel> GetAllUserWithRequestStatus(long currentUserId);
+        Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId);
 
     }
 }
