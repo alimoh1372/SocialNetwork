@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "defaultProvider": "unpkg",
+  "libraries": [
+    {
+      "library": "@microsoft/signalr@6.0.6",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "dist/browser/signalr.js",
+        "dist/browser/signalr.min.js"
+      ]
+    },
+    {
+      "library": "moment@2.29.3",
+      "destination": "wwwroot/lib/",
+      "files": [
+        "dist/moment.js"
+      ]
+    }
+  ]
+}

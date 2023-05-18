@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Contracts\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\SocialNetwork.Application.Contracts\SocialNetwork.Application.Contracts.csproj" />
   </ItemGroup>
 

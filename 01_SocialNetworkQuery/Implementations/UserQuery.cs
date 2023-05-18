@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using _00_Framework.Application;
-using _01_SocialNetworkQuery.Contract;
+using _01_SocialNetworkQuery.Contracts;
 using SocialNetwork.Application.Contracts.UserContracts;
 
-namespace _01_SocialNetworkQuery.Implementation
+namespace _01_SocialNetworkQuery.Implementations
 {
     public class UserQuery :IUserQuery
     {

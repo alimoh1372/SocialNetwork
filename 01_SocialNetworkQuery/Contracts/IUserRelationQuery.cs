@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using SocialNetwork.Application.Contracts.UserRelationContracts;
 
-namespace _01_SocialNetworkQuery.Contract
+namespace _01_SocialNetworkQuery.Contracts
 {
     public interface IUserRelationQuery
     {

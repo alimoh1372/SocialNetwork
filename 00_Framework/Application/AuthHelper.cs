@@ -37,6 +37,7 @@ namespace _00_Framework.Application
 
         public bool IsAuthenticated()
         {
+            
             return _contextAccessor.HttpContext.User.Identity.IsAuthenticated;
 
 

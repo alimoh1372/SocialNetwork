@@ -16,4 +16,9 @@
     <ProjectReference Include="..\SocialNetwork.Infrastructure.Configuration\SocialNetwork.Infrastructure.Configuration.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Hubs\" />
+    <Folder Include="Tools\Contracts\" />
+  </ItemGroup>
+
 </Project>

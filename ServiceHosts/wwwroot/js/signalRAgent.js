@@ -1,21 +1,20 @@
-﻿var activeRoomId = '';
-var UserForm = document.getElementById('userDefine');
-var userName = '';
+﻿
+//var activeRoomId = '';
+var chatFormEl;
+var requestAnchors;
+/*var UserForm = document.getElementById('userDefine');*/
+var currentUserName = '';
+var currentUserId = 0;
 var container = document.getElementById('toBlur');
 var roomListEl = document.getElementById('roomList');
 var roomHistoryEl = document.getElementById('chatHistory');
 //Initial chatHubConnection
 var chatConnection = new signalR.HubConnectionBuilder()
     .withUrl('/chatHub')
-    .build();
+    .build()
 
 
 chatConnection.onclose(function () {
-    container.classList.add('blured');
-    var enterYourNameWarningEl = document.getElementById('enterNameInfo');
-    enterYourNameWarningEl.style.display = 'block';
-    enterYourNameWarningEl.firstElementChild.text = "Disconnected From Server...";
-
     //Try to reconnect 5 time
     tryToReconnect();
 });
@@ -24,45 +23,38 @@ function tryToReconnect() {
     var isError = false;
     var counter = 0;
     var error = '';
+
     while (isError || counter > 4) {
-       
+
         setTimeout(function () {
-                chatConnection.start()
-                    .catch((err) => {
-                        error = err;
-                    });
-            },
+            chatConnection.start()
+                .catch((err) => {
+                    error = err;
+                });
+        },
             5000);
         counter = counter + 1;
         isError = (error.length < 1);
     }
     if (isError) {
-        alert(error+'\n Please call admin...');
+        alert(error + '\n Please call admin... Or try later...');
     } else {
-        openChatSegment();
+        window.location.reload(true);
     }
 }
-UserForm.addEventListener('submit', function (e) {
-    e.preventDefault();
-    const isSearchFormClass = UserForm.classList.contains('searchForm');
+//UserForm.addEventListener('submit', function (e) {
+//    e.preventDefault();
+//    chatConnection.invoke('SetName', currentUserName)
+//        .catch((err) => alert("An exception accord on server side..."));
+//    openChatSegment();
+//});
+//Update the row of request by row request id
+//chatConnection.on('updateRequestRow', updateRequestStatusToPending);
+chatConnection.on('updateRequestRowAddAcceptButton', updateRequestRowAddAcceptButton)
 
-    if (isSearchFormClass) {
-        //TODO: Add Search User Name from users operation
-
-    } else {
-        //first Time Enter button press
-        userName = e.target[0].value;
-        e.target[0].value = '';
-        e.target[0].placeholder = 'Search Users...';
-        UserForm.classList.add('searchForm');
-        chatConnection.invoke('SetName', userName)
-            .catch((err) => alert("An exception accord on server side..."));
-        openChatSegment();
-    }
-});
-chatConnection.on('responseSetName', setNameResult);
-chatConnection.on('ReceiveMessage', addMessage);
-chatConnection.on('loadUserNamesChatWithThem', loadChatList);
+/*chatConnection.on('responseSetName', setNameResult);*/
+//chatConnection.on('ReceiveMessage', addMessage);
+//chatConnection.on('loadUserNamesChatWithThem', loadChatList);
 // TODO: Initialize hub connections
 
 
@@ -88,12 +80,12 @@ chatConnection.on('loadUserNamesChatWithThem', loadChatList);
 //    handleDisconnected();
 //});
 
-//handle changes of page after connection started
-function openChatSegment() {
-    container.classList.remove('blured');
-    var enterYourNameWarningEl = document.getElementById('enterNameInfo');
-    enterYourNameWarningEl.style.display = 'none';
-}
+////handle changes of page after connection started
+//function openChatSegment() {
+
+//    var enterYourNameWarningEl = document.getElementById('enterNameInfo');
+//    enterYourNameWarningEl.style.display = 'none';
+//}
 
 //public method give handler to retry connect again to server
 //function handleDisconnected(retryFunc) {
@@ -102,16 +94,46 @@ function openChatSegment() {
 //    setTimeout(retryFunc, 5000);
 //}
 
-function setNameResult(result) {
-    if (result) {
-        //if the user exist before
-        //ToDO: implement add history of chat
-    } else {
-        //if the user isn't exit before
-        const message = 'Hi Dear ' + userName + ' welcome to the ChatRoom';
-        const timeOffsetUtcNow = new Date().getTimezoneOffset(0);
-        addMessage(userName, timeOffsetUtcNow, message);
-    }
+//function setNameResult(result) {
+//    if (result) {
+//        //if the user exist before
+//        //ToDO: implement add history of chat
+//    } else {
+//        //if the user isn't exit before
+//        const message = 'Hi Dear ' + currentUserName + ' welcome to the ChatRoom';
+//        const timeOffsetUtcNow = new Date().getTimezoneOffset(0);
+//        addMessage(currentUserName, timeOffsetUtcNow, message);
+//    }
+//}
+
+
+//Update current user row after send relation request on request sended to it
+function updateRequestRowAddAcceptButton(userIdRequestSentTo) {
+    //let rows = document.querySelectorAll('tr[data-userid]')
+    let rows = document.querySelectorAll("tr[data-userid]");
+    rows.forEach(function(tr){
+        let useridAtt = tr.getAttribute('data-userid');
+        if (useridAtt != '' && Number(useridAtt) == userIdRequestSentTo) {
+            let tds = row[0].getElementsByTagName('td');
+            tds[2].innerHTML = "Requested relation to you";
+            tds[3].innerHTML = '<i class="text-warning fa fa-question-circle"></i> <span class="label label-warning">Request Came</span>';
+            tds[4].innerHTML = '<td><a class="btn btn-success" data-acceptRequest=' + userIdRequestSentTo + '" href="">Accept</a></td>';
+            return;
+        }
+    });
+    
+   
+}
+
+//Update given user Id row in request table to the request pending
+function updatePendingRequestRow(userId) {
+    var rows = document.querySelectorAll('tr[data-userid]')
+    // var row = document.querySelector('tr[data-userid=' + CSS.escape(userIdRequestSentTo) + ']');
+
+    var tds = row.querySelectorAll('td');
+    tds[2].innerHTML = "You Sent Request";
+    td[3].innerHTML = 'Request <span class="label label-warning">Pending...</span>';
+    td[4].innerHTML = '';
 }
 
 function loadChatList(userNameList) {
@@ -127,22 +149,52 @@ function sendMessage(text) {
         // TODO: Send an agent message
     }
 }
-
+function getCurrentUserId() {
+    return Number(document.getElementById('currentUser').getAttribute('data-currentUserId'));
+}
 function ready() {
     // TODO: Start the hub connections
 
     chatConnection.start();
 
     var chatFormEl = document.getElementById('chatForm');
+
+    currentUserId = getCurrentUserId();
     chatFormEl.addEventListener('submit', function (e) {
         e.preventDefault();
+        debugger;
+        //var text = e.target[0].value;
+        //e.target[0].value = '';
+        //sendMessage(text);
+    });
 
-        var text = e.target[0].value;
-        e.target[0].value = '';
-        sendMessage(text);
+    var ulFriendEl = document.getElementById('UlFriends');
+
+    //AddEventListener to all request anchor
+
+    requestAnchors = document.querySelectorAll('a[data-requestedUserId]');
+    for (var i = 0; i < requestAnchors.linkToRequest; i++) {
+
+    }
+    requestAnchors.forEach((item) => {
+        item.addEventListener('click', function (e) {
+
+            e.preventDefault();
+            var userRequestSendToIt = Number(e.target.getAttribute('data-requestedUserId'));
+            if (currentUserId == 0)
+                currentUserId = getCurrentUserId();
+            linkToRequest(currentUserId, userRequestSendToIt);
+
+
+
+        });
     });
 }
+function linkToRequest(currentUserId, userRequestSendToIt) {
 
+    chatConnection.invoke('SendUserRelationRequest', currentUserId, userRequestSendToIt);
+
+}
 function switchActiveRoomTo(id) {
     if (id === activeRoomId) return;
 
@@ -162,14 +214,14 @@ function switchActiveRoomTo(id) {
 
 
 
-roomListEl.addEventListener('click', function (e) {
-    roomHistoryEl.style.display = 'block';
+//roomListEl.addEventListener('click', function (e) {
+//    roomHistoryEl.style.display = 'block';
 
-    setActiveRoomButton(e.target);
+//    setActiveRoomButton(e.target);
 
-    var roomId = e.target.getAttribute('data-id');
-    switchActiveRoomTo(roomId);
-});
+//    var roomId = e.target.getAttribute('data-id');
+//    switchActiveRoomTo(roomId);
+//});
 
 function setActiveRoomButton(el) {
     var allButtons = roomListEl.querySelectorAll('a.list-group-item');

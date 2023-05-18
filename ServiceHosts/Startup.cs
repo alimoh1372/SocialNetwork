@@ -14,6 +14,9 @@ using System.Threading.Tasks;
 using _00_Framework.Application;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
+using ServiceHosts.Hubs;
+using ServiceHosts.Tools.Implementation;
 using SocialNetwork.Infrastructure.Configuration;
 
 namespace ServiceHosts
@@ -30,14 +33,16 @@ namespace ServiceHosts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
-           // string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
-            SocialNetworkBootstrapper.Configure(services,connectionString);
+            // string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
+            string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
+            SocialNetworkBootstrapper.Configure(services, connectionString);
 
-            
+
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthHelper, AuthHelper>();
+            services.AddSignalR();
+           // services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
@@ -54,12 +59,15 @@ namespace ServiceHosts
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ChatPage",
-                    builder => builder.RequireClaim( "UserId"));
+                    builder => builder.RequireClaim("UserId"));
+                options.AddPolicy("ChatHub",
+                   builder => builder.RequireClaim("UserId"));
             });
             services.AddRazorPages()
                 .AddRazorPagesOptions(options =>
                 {
                     options.Conventions.AuthorizePage("/ChatPage", "ChatPage");
+                    options.Conventions.AuthorizeFolder("/Hubs", "ChatHub");
                 });
         }
 
@@ -83,10 +91,11 @@ namespace ServiceHosts
             app.UseRouting();
 
             app.UseAuthorization();
-
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chatHub");
             });
         }
     }
