@@ -41,8 +41,8 @@ namespace ServiceHosts
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthHelper, AuthHelper>();
+            services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.AddSignalR();
-           // services.AddSingleton<IUserIdProvider, UserIdProvider>();
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;

@@ -26,5 +26,13 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
 
         Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId);
 
+        /// <summary>
+        /// Accept the relation in application of user that request sent to it
+        /// Just the user that request sent to it can accept
+        /// </summary>
+        /// <param name="userIdRequestSentFromIt">User id that requested relationship</param>
+        /// <param name="userIdRequestSentToIt">User id that request sent to it</param>
+        /// <returns></returns>
+        Task<OperationResult> Accept(long userIdRequestSentFromIt, long userIdRequestSentToIt);
     }
 }

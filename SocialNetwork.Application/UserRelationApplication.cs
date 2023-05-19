@@ -75,5 +75,16 @@ namespace SocialNetwork.Application
         {
             return await _userRelationRepository.GetAllUserWithRequestStatus(currentUserId);
         }
+
+        public async Task<OperationResult> Accept(long userIdRequestSentFromIt, long userIdRequestSentToIt)
+        {
+            var result = new OperationResult();
+            var relation =await _userRelationRepository.GetRelationBy(userIdRequestSentFromIt, userIdRequestSentToIt);
+            if (relation == null)
+                return result.Failed(ApplicationMessage.NotFound);
+            relation.AcceptRelation();
+            _userRelationRepository.SaveChanges();
+            return result.Succedded();
+        }
     }
 }

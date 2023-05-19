@@ -10,7 +10,7 @@ using SocialNetwork.Application.Contracts.UserRelationContracts;
 namespace ServiceHosts.Hubs
 {
     [Authorize]
-    public class ChatHub:Hub
+    public class ChatHub : Hub
     {
         private readonly IUserRelationApplication _userRelationApplication;
         private readonly IAuthHelper _authHelper;
@@ -20,30 +20,50 @@ namespace ServiceHosts.Hubs
             _authHelper = authHelper;
         }
 
-        public async  void SendUserRelationRequest(long currentUserId, long requestSendTo)
+        public async void SendUserRelationRequest(long currentUserId, long requestSendToId)
         {
-            //CreateUserRelation relation = new CreateUserRelation
-            //{
-            //    FkUserAId = currentUserId,
-            //    FkUserBId = requestSendTo
-            //};
-            //var result =_userRelationApplication.Create(relation);
-            if (true)
+            CreateUserRelation relation = new CreateUserRelation
+            {
+                FkUserAId = currentUserId,
+                FkUserBId = requestSendToId
+            };
+            var result = _userRelationApplication.Create(relation);
+            if (result.IsSuccedded)
             {
                 try
                 {
-                   await Clients.All.SendAsync("updateRequestRowAddAcceptButton", currentUserId); 
-                    //Clients.Caller.SendAsync("updateCurrentUserRow", requestSendTo);
+                    await Clients.User(requestSendToId.ToString()).SendAsync("updateRequestRowAddAcceptButton", currentUserId);
+                    await Clients.Caller.SendAsync("updateRequestRowAddPending", requestSendToId);
+                    return;
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
-                    throw;
+                    await Clients.Caller.SendAsync("ShowError", e.Message);
+                    return;
                 }
-                 
-            }
-                
 
+            }
+
+            if (result.IsSuccedded)
+                await Clients.Caller.SendAsync("ShowError", result.Message);
+
+        }
+
+        public async Task AcceptRequest(long currentUserId, long userIdRequestSentFromIt)
+        {
+
+            var result = await _userRelationApplication.Accept(userIdRequestSentFromIt, currentUserId);
+
+            if (result.IsSuccedded)
+            {
+                await Clients.Users(currentUserId.ToString(), userIdRequestSentFromIt.ToString())
+                    .SendAsync("handleAfterAcceptedRequest", userIdRequestSentFromIt, currentUserId);
+                return;
+            }
+
+            if (!result.IsSuccedded)
+                await Clients.Caller.SendAsync("ShowError", result.Message);
         }
     }
 }

@@ -8,5 +8,6 @@ namespace SocialNetwork.Domain.UserRelationAgg
     public interface IUserRelationRepository:IBaseRepository<long,UserRelation>
     {
         Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId);
+        Task<UserRelation> GetRelationBy(long userIdRequestSentFromIt, long userIdRequestSentToIt);
     }
 }

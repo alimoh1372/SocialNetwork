@@ -44,6 +44,12 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
             return await query;
         }
 
+        public async Task<UserRelation> GetRelationBy(long userIdRequestSentFromIt, long userIdRequestSentToIt)
+        {
+            return await _context.UserRelations.FirstOrDefaultAsync(x =>
+                x.FkUserAId == userIdRequestSentFromIt && x.FkUserBId == userIdRequestSentToIt);
+        }
+
         private RequestStatus CheckStatusOfRequest(long userIdA, long userIdB)
         {
             //get relation between a to b or inversion of it
