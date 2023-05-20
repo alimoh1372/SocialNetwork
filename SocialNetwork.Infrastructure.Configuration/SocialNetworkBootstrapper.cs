@@ -3,8 +3,10 @@ using _01_SocialNetworkQuery.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SocialNetwork.Application;
+using SocialNetwork.Application.Contracts.MessageContracts;
 using SocialNetwork.Application.Contracts.UserContracts;
 using SocialNetwork.Application.Contracts.UserRelationContracts;
+using SocialNetwork.Domain.MessageAgg;
 using SocialNetwork.Domain.UserAgg;
 using SocialNetwork.Domain.UserRelationAgg;
 using SocialNetwork.Infrastructure.EfCore;
@@ -26,8 +28,14 @@ namespace SocialNetwork.Infrastructure.Configuration
 
             services.AddTransient<IUserRelationApplication, UserRelationApplication>();
             services.AddTransient<IUserRelationRepository, UserRelationRepository>();
+
+            services.AddTransient<IMessageApplication, MessageApplication>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
+
+
             services.AddTransient<IUserQuery, UserQuery>();
             services.AddTransient<IUserRelationQuery, UserRelationQuery>();
+            services.AddTransient<IMessageQuery, MessageQuery>();
             services.AddDbContext<SocialNetworkContext>(x => x.UseSqlServer(connectionString));
         }
     }

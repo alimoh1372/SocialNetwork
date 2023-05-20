@@ -53,17 +53,17 @@ namespace ServiceHosts.Hubs
         public async Task AcceptRequest(long currentUserId, long userIdRequestSentFromIt)
         {
 
-            var result = await _userRelationApplication.Accept(userIdRequestSentFromIt, currentUserId);
+            //var result = await _userRelationApplication.Accept(userIdRequestSentFromIt, currentUserId);
 
-            if (result.IsSuccedded)
+            if (true)
             {
                 await Clients.Users(currentUserId.ToString(), userIdRequestSentFromIt.ToString())
                     .SendAsync("handleAfterAcceptedRequest", userIdRequestSentFromIt, currentUserId);
                 return;
             }
 
-            if (!result.IsSuccedded)
-                await Clients.Caller.SendAsync("ShowError", result.Message);
+            //if (!result.IsSuccedded)
+            //    await Clients.Caller.SendAsync("ShowError", result.Message);
         }
     }
 }

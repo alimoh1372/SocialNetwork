@@ -126,7 +126,7 @@ function AddNewItemToFriends(_name, _userId) {
     ulFriendsEl.appendChild(newFiriendLiEl);
 
     //Add eventListener to the tab button
-    addEventListenerToFriendLiEl(newFiriendLiEl);
+    addEventListenerToFriendLiElMessageButton(newFiriendLiEl);
 }
 
 
@@ -137,61 +137,93 @@ function AddNewItemToFriends(_name, _userId) {
 
 
 
-function addEventListenerToFriendLiEl(_newFiriendLiEl) {
-    _newFiriendLiEl.addEventListener('click',
+function addEventListenerToFriendLiElMessageButton(_newFiriendLiEl) {
+    var messageButton = _newFiriendLiEl.querySelector('a[data-sendMessage]')
+    messageButton.addEventListener('click',
         function (e) {
             e.preventDefault();
-            activeUserIdToChat = Number(_newFiriendLiEl.getAttribute('data-friendUserId'));
-            if (!activeUserToChat)
+            activeUserIdToChat = Number(messageButton.getAttribute('data-sendMessage'));
+            if (!activeUserIdToChat)
                 return;
-            SwitchTabToAndLoadChats('#tab-chat');
+
+            //switch on tab chat 
+            SwitchTabTo('#tab-chat');
+
+            //Load Chat history
             let chatHistoryDiv = document.getElementById("chatHistory");
+
+            //Remove chat history that load befor
             removeAllChildren(chatHistoryDiv);
+
+            //Load current user and friend chat history
             LoadChat(currentUserId, activeUserToChat);
         });
 }
 function LoadChat(_currentUserId, _activeUserToChat) {
-    let url = window.location.origin + "/ChatPage/GetChatHistory"
-    $.get(url,
-        {
-            currentUserId: _currentUserId,
-            activeUserToChat: _activeUserToChat
-        },
-        function (data, textStatus, jqXHR) {
-            appendChatItems(date);
-        });
-}
 
-function appendChatItems(chatItems) {
+    $.ajax({
+        type: "GET",
+        url: "/ChatPage?handler=LoadChatHistory",
+        data: {
+            "currentUserId": _currentUserId,
+            "activeUserToChat": _activeUserToChat
+        },
+        success: function (response) {
+            appendChatItems(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
+//Append list of message to the chat history place
+function appendChatItems(chatItems)
+{
     let chatItemsJs = JSON.parse(chatItems)
     if (!chatItemsJs)
         AlertError('There is error On ajaxRequest request...');
     chatItemsJs.forEach((_chatMessage) => {
-        //TODO:Implementing add tochat items
+        //Add a message item to the chat history ul
+        appendChatItem(_chatMessage);
     });
 }
+
+function appendChatItem(message) {
+    if (!message && message.length == 0)
+        return;
+    if (!currentUserId && currentUserId==0) {
+        currentUserId = getCurrentUserId();
+    }
+    //ToDo:Implementing Adding message to the chat history break each part to apart function such createBody,CreateImage,...
+
+}
+
+
+
+
 
 //Remove All Chat History
 function removeAllChildren(_node) {
     if (!_node) return;
 
     while (_node.lastChild) {
-        _node.removeChild(node.lastChild);
+        _node.removeChild(_node.lastChild);
     }
 }
 var activeUserToChat;
 //switch active tab to the given tab
 function SwitchTabTo(liHrefAtt) {
     var divTabToActive = document.getElementById('divTabToActive');
-    let tabs = divTabToActive.getElementById('li');
-    tabs.forEach(liEl, () => {
-        let aEl = liEl.querySelector('a');
-        if (aEl.href == '#tab-chat')
-            aEl.classList.add("active");
-
-        else
-            aEl.classList.remove("active");
-    });
+    let tabs = divTabToActive.getElementsByTagName('li');
+    for (var i = 0; i < tabs.length; i++) {
+        let aEl = tabs[i].querySelector('a');
+        let href = aEl.getAttribute('href')
+        if (href == liHrefAtt)
+            aEl.click();
+    }
 }
 
 //Update All user table after request sent and be done successfully 

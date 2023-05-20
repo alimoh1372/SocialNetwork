@@ -1,4 +1,6 @@
-﻿using _00_Framework.Application;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using _00_Framework.Application;
 using SocialNetwork.Application.Contracts.MessageContracts;
 using SocialNetwork.Domain.MessageAgg;
 
@@ -52,6 +54,13 @@ namespace SocialNetwork.Application
         public OperationResult AsRead(long id)
         {
             throw new System.NotImplementedException();
+        }
+
+        public async Task<List<MessageViewModel>> LoadChatHistory(long idUserA, long idUserB)
+        {
+            
+            return await _messageRepository.LoadChatHistory(idUserA, idUserB);
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using SocialNetwork.Domain.MessageAgg;
 using SocialNetwork.Domain.UserAgg;
 using SocialNetwork.Domain.UserRelationAgg;
 using SocialNetwork.Infrastructure.EfCore.Mapping;
@@ -10,7 +11,7 @@ namespace SocialNetwork.Infrastructure.EfCore
     {
         public DbSet<User> Users { get; set; }
         public DbSet<UserRelation> UserRelations { get; set; }
-
+        public DbSet<Message> Messages { get; set; }
         public SocialNetworkContext(DbContextOptions<SocialNetworkContext> options):base(options)
         {
             
