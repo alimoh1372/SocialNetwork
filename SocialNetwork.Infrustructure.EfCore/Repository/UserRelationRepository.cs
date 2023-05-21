@@ -24,7 +24,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
         public async Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId)
         {
             //Get all user expect current user
-            var query = _context.Users.Include(x => x.UserARelations)
+            var query =await _context.Users.Include(x => x.UserARelations)
                 .Include(x => x.UserBRelations)
                 .Where(x => x.Id != currentUserId)
                 .Select(x => new UserWithRequestStatusVieModel
@@ -37,11 +37,13 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                 .ToListAsync();
             
             //Fill request status property
-            Parallel.ForEach( query.Result,userRelation =>
+            foreach (UserWithRequestStatusVieModel userWithRequestStatusVieModel in query)
             {
-                userRelation.RequestStatusNumber = CheckStatusOfRequest(currentUserId, userRelation.UserId);
-            });
-            return await query;
+                userWithRequestStatusVieModel.RequestStatusNumber =await CheckStatusOfRequest(currentUserId,
+                    userWithRequestStatusVieModel.UserId);
+            }
+           
+            return  query;
         }
 
         public async Task<UserRelation> GetRelationBy(long userIdRequestSentFromIt, long userIdRequestSentToIt)
@@ -50,22 +52,22 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                 x.FkUserAId == userIdRequestSentFromIt && x.FkUserBId == userIdRequestSentToIt);
         }
 
-        private RequestStatus CheckStatusOfRequest(long userIdA, long userIdB)
+        private async Task<RequestStatus> CheckStatusOfRequest(long userIdA, long userIdB)
         {
             //get relation between a to b or inversion of it
-            var userRelations = _context.UserRelations.
+            var userRelations =await _context.UserRelations.
                 Where(x => (x.FkUserAId == userIdA && x.FkUserBId == userIdB)
                                  || (x.FkUserAId == userIdB && x.FkUserBId == userIdA))
                                  .ToListAsync();
 
             //check if isn't any request return that status
-            if (userRelations.Result.Count == 0)
+            if (userRelations.Count == 0)
                 return RequestStatus.WithoutRequest;
             //if relations is bigger than 1 there is a error in application logic
-            if (userRelations.Result.Count > 1)
+            if (userRelations.Count > 1)
                 return RequestStatus.ErrorWithRelationNumbers;
 
-            var userRelation = userRelations.Result.First();
+            var userRelation = userRelations.First();
 
 
             if (userRelation.FkUserAId == userIdA && userRelation.FkUserBId == userIdB && userRelation.Approve == false)

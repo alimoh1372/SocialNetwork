@@ -733,3 +733,11 @@ textarea.form-control {
 
 
 /*Start the Custom own config*/
+
+#UlFriends * {
+    overflow-anchor: none;
+}
+#anchor {
+    overflow-anchor: auto;
+    height: 1px;
+}

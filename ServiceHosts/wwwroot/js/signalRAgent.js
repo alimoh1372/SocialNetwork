@@ -167,7 +167,7 @@ function addEventListenerToFriendLiElMessageButton(_newFriendLiEl) {
             removeAllChildren(chatHistoryDiv);
 
             //Load current user and friend chat history
-            LoadChat(currentUserId, activeUserToChat);
+            LoadChat(currentUserId, activeUserIdToChat);
         });
 }
 function LoadChat(_currentUserId, _activeUserToChat) {
@@ -199,6 +199,14 @@ function appendChatItems(chatItems) {
         //Add a message item to the chat history ul
         appendChatItem(_chatMessage);
     });
+    chatHistoryDiv = document.getElementById('chatHistory');
+    let items = chatHistoryDiv.querySelectorAll('div.conversation-item');
+    const latestItem = items[items.length - 1];
+    if (latestItem && latestItem.length > 0)
+        latestItem.scrollIntoView(true);
+
+
+
 }
 
 function appendChatItem(message) {
@@ -210,13 +218,15 @@ function appendChatItem(message) {
     //Adding message to the chat history break each part to apart function such createBody,CreateImage,CreateMessageContent...
 
     let messageDiv = CreateMessageDivEl(message);
+
     messageDiv.appendChild(CreateUserDiv(message));
 
-    let messageBodyDiv = CreateMessageBoyDiv(message);
-    messageDiv.appendChild(messageBodyDiv);
+    messageDiv.appendChild(CreateMessageBoyDiv(message));
 
     chatHistoryDiv = document.getElementById('chatHistory');
     chatHistoryDiv.appendChild(messageDiv);
+
+    messageDiv.scrollIntoView();
 
 }
 
@@ -362,7 +372,7 @@ function filterUsersBy(name) {
 
     let tRows = TableAllUsers.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
     for (var i = 0; i < tRows.length; i++) {
-        let currentRow = tRows[0];
+        let currentRow = tRows[i];
 
         //Get name of use in table row
         let tdName = currentRow.getElementsByTagName('td')[1];
@@ -416,10 +426,10 @@ function ready() {
             AlertError('Please Enter your message...');
             return;
         }
-            
-        chatConnection.invoke('SendMessage', currentUserId,activeUserIdToChat,text)
+
+        chatConnection.invoke('SendMessage', currentUserId, activeUserIdToChat, text)
             .catch((err) => alert("An exception accord on sending message from server side..."));
-        
+
     });
     //AddEventListener to all request anchor
 
@@ -428,7 +438,7 @@ function ready() {
         item.addEventListener('click', function (e) {
             e.preventDefault();
             var userRequestSendToIt = Number(e.target.getAttribute('data-requestedUserId'));
-            debugger;
+
             if (currentUserId == 0)
                 currentUserId = getCurrentUserId();
             sendRequestOfRelationShip(currentUserId, userRequestSendToIt);

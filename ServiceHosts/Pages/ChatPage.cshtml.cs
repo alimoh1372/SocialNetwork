@@ -29,10 +29,10 @@ namespace ServiceHosts.Pages
             _messageQuery = messageQuery;
         }
 
-        public async void OnGet()
+        public void OnGet()
         {
             UserInfo =_userQuery.GetCurrentUserInfo().Result;
-            UserWithRequests = await _userRelationQuery.GetAllUsersWithRelationStatusAsync(UserInfo.Id);
+            UserWithRequests = _userRelationQuery.GetAllUsersWithRelationStatusAsync(UserInfo.Id).Result;
         }
 
         public async Task<JsonResult> OnGetLoadChatHistory(long currentUserId, long activeUserToChat)

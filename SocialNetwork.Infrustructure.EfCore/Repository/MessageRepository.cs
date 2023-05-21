@@ -31,6 +31,8 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
                     MessageContent = x.MessageContent
                 })
+                .Where(x=>(x.FkFromUserId== idUserA && x.FkToUserId==idUserB)
+                          ||(x.FkFromUserId==idUserB && x.FkToUserId==idUserA))
                 .ToListAsync();
         }
 
