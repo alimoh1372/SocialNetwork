@@ -8,17 +8,17 @@ using SocialNetwork.Domain.MessageAgg;
 
 namespace SocialNetwork.Infrastructure.EfCore.Repository
 {
-    public class MessageRepository:BaseRepository<long,Message>,IMessageRepository
+    public class MessageRepository : BaseRepository<long, Message>, IMessageRepository
     {
         private readonly SocialNetworkContext _context;
-        public MessageRepository( SocialNetworkContext context) : base(context)
+        public MessageRepository(SocialNetworkContext context) : base(context)
         {
             _context = context;
         }
 
         public async Task<List<MessageViewModel>> LoadChatHistory(long idUserA, long idUserB)
         {
-            return await  _context.Messages
+            return await _context.Messages
                 .Include(x => x.FromUser)
                 .Include(x => x.ToUser)
                 .Select(x => new MessageViewModel
@@ -26,13 +26,31 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     Id = x.Id,
                     CreationDate = x.CreationDate,
                     FkFromUserId = x.FkFromUserId,
-                    SenderFullName = x.FromUser.LastName+" "+x.FromUser.LastName,
+                    SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
                     FkToUserId = x.FkToUserId,
-                    ReceiverFullName = x.ToUser.Name+" "+x.ToUser.LastName,
+                    ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
                     MessageContent = x.MessageContent
                 })
-                .OrderByDescending(x=>x.Id)
                 .ToListAsync();
+        }
+
+        public async Task<MessageViewModel> GetLatestMessageBy(long fromUserId, long toUserId)
+        {
+           return await _context.Messages
+                .Include(x => x.FromUser)
+                .Include(x => x.ToUser)
+                .Select(x => new MessageViewModel
+                {
+                    Id = x.Id,
+                    CreationDate = x.CreationDate,
+                    FkFromUserId = x.FkFromUserId,
+                    SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
+                    FkToUserId = x.FkToUserId,
+                    ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
+                    MessageContent = x.MessageContent
+                }).
+                OrderBy(x=>x.Id).
+                LastOrDefaultAsync(x => x.FkFromUserId == fromUserId && x.FkToUserId == toUserId);
         }
     }
 }

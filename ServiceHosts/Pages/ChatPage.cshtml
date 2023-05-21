@@ -125,7 +125,7 @@
                     </div>
                 </div>
                 <!--End User Info Center panel for user detail -->
-                <div  class="tabs-wrapper profile-tabs">
+                <div class="tabs-wrapper profile-tabs">
                     <ul id="divTabToActive" class="nav nav-tabs">
                         <li class="active">
                             <a href="#tab-activity" data-toggle="tab">User Relation Requests</a>
@@ -259,8 +259,8 @@
                         <div class="tab-pane fade" id="tab-friends">
                             <ul id="UlFriends" class="widget-users row">
                                 @foreach (var userFriend in
-                                   Model.UserWithRequests.Where(x => x.RequestStatusNumber == RequestStatus.RequestAccepted 
-                                                                     || x.RequestStatusNumber == RequestStatus.RevertRequestAccepted))
+                                  Model.UserWithRequests.Where(x => x.RequestStatusNumber == RequestStatus.RequestAccepted
+                                                                    || x.RequestStatusNumber == RequestStatus.RevertRequestAccepted))
                                 {
                                     <li data-friendUserId="@userFriend.UserId" class="col-md-4">
                                         <div class="img">
@@ -422,7 +422,7 @@
 @section Scripts
 {
     <script src="~/lib/dist/browser/signalr.js"></script>
-    <script src="~/lib/dist/moment.js"></script>
+    <script src="~/lib/deplug/moment.min/min/moment.min.js"></script>
     <script src="~/js/signalRAgent.js"></script>
     <script type="text/javascript">
     $(function () {

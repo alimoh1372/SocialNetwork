@@ -62,5 +62,10 @@ namespace SocialNetwork.Application
             return await _messageRepository.LoadChatHistory(idUserA, idUserB);
 
         }
+
+        public async Task<MessageViewModel> GetLatestMessage(long fromUserId, long toUserId)
+        {
+            return await _messageRepository.GetLatestMessageBy(fromUserId,toUserId);
+        }
     }
 }

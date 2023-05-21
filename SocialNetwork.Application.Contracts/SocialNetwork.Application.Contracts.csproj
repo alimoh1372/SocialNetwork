@@ -8,8 +8,4 @@
     <ProjectReference Include="..\00_Framework\00_Framework.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="MessageContracts\" />
-  </ItemGroup>
-
 </Project>

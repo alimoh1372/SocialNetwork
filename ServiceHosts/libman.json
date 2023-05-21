@@ -11,10 +11,10 @@
       ]
     },
     {
-      "library": "moment@2.29.3",
-      "destination": "wwwroot/lib/",
+      "library": "@deplug/moment.min@latest",
+      "destination": "wwwroot/lib/deplug/moment.min/",
       "files": [
-        "dist/moment.js"
+        "min/moment.min.js"
       ]
     }
   ]

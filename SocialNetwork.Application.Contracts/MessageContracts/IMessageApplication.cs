@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using _00_Framework.Application;
 
@@ -44,49 +41,6 @@ namespace SocialNetwork.Application.Contracts.MessageContracts
         OperationResult AsRead(long id);
 
         Task<List<MessageViewModel>> LoadChatHistory(long idUserA, long idUserB);
-    }
-
-    public class EditMessage
-    {
-        public long Id { get; set; }
-
-        [DisplayName("Message text")]
-        [Required]
-        public string MessageContent { get;  set; }
-    }
-
-    public class SendMessage        
-    {
-        [DisplayName("Message from")]
-        [Range(1,long.MaxValue)]
-        public long FkFromUserId { get;  set; }
-
-        [DisplayName("Message to")]
-        [Range(1, long.MaxValue)]
-        public long FkToUserId { get;  set; }
-
-        [DisplayName("Message text")]
-        [Required]
-        public string MessageContent { get;  set; }
-    }
-
-    /// <summary>
-    /// A model to show the message on client side
-    /// </summary>
-    public class MessageViewModel
-    {
-        public long Id { get; set; }
-        public DateTimeOffset CreationDate { get; set; }
-
-        public long FkFromUserId { get;  set; }
-        public string SenderFullName { get;  set; }
-
-        
-        public long FkToUserId { get;  set; }
-
-        public string ReceiverFullName { get; set; }
-       
-        public string MessageContent { get; set; }
-       //TODO:Implementing Like And ReadMessage operation
+        Task<MessageViewModel> GetLatestMessage(long fromUserId, long toUserId);
     }
 }

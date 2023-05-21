@@ -10,12 +10,13 @@ var currentUserName = '';
 var currentUserId = 0;
 var container = document.getElementById('toBlur');
 var roomListEl = document.getElementById('roomList');
-var roomHistoryEl = document.getElementById('chatHistory');
+var chatHistoryDiv = document.getElementById('chatHistory');
+var activeUserIdToChat = 0;
 var currentTableRowInAllUsersWorkOnIt;
 //Initial chatHubConnection
 var chatConnection = new signalR.HubConnectionBuilder()
     .withUrl('/chatHub')
-    .build()
+    .build();
 
 
 chatConnection.onclose(function () {
@@ -60,6 +61,16 @@ chatConnection.on('handleAfterAcceptedRequest', handleAfterAcceptedRequest);
 
 chatConnection.on('ShowError', AlertError);
 
+
+chatConnection.on('addNewMessageToChatHistoryUlEl', addNewMessageToChatHistoryUlEl);
+
+
+
+//Add new message to chat history
+function addNewMessageToChatHistoryUlEl(message) {
+    let newMessage = JSON.parse(message);
+    appendChatItem(newMessage);
+}
 //Handle the   handleAfterAcceptedRequest 
 
 function handleAfterAcceptedRequest(userIdReuestSentFromIt, userIdRequestAcceptByIt) {
@@ -137,8 +148,8 @@ function AddNewItemToFriends(_name, _userId) {
 
 
 
-function addEventListenerToFriendLiElMessageButton(_newFiriendLiEl) {
-    var messageButton = _newFiriendLiEl.querySelector('a[data-sendMessage]')
+function addEventListenerToFriendLiElMessageButton(_newFriendLiEl) {
+    var messageButton = _newFriendLiEl.querySelector('a[data-sendMessage]');
     messageButton.addEventListener('click',
         function (e) {
             e.preventDefault();
@@ -180,9 +191,8 @@ function LoadChat(_currentUserId, _activeUserToChat) {
     });
 }
 //Append list of message to the chat history place
-function appendChatItems(chatItems)
-{
-    let chatItemsJs = JSON.parse(chatItems)
+function appendChatItems(chatItems) {
+    let chatItemsJs = JSON.parse(chatItems);
     if (!chatItemsJs)
         AlertError('There is error On ajaxRequest request...');
     chatItemsJs.forEach((_chatMessage) => {
@@ -194,16 +204,71 @@ function appendChatItems(chatItems)
 function appendChatItem(message) {
     if (!message && message.length == 0)
         return;
-    if (!currentUserId && currentUserId==0) {
+    if (!currentUserId && currentUserId == 0) {
         currentUserId = getCurrentUserId();
     }
-    //ToDo:Implementing Adding message to the chat history break each part to apart function such createBody,CreateImage,...
+    //Adding message to the chat history break each part to apart function such createBody,CreateImage,CreateMessageContent...
+
+    let messageDiv = CreateMessageDivEl(message);
+    messageDiv.appendChild(CreateUserDiv(message));
+
+    let messageBodyDiv = CreateMessageBoyDiv(message);
+    messageDiv.appendChild(messageBodyDiv);
+
+    chatHistoryDiv = document.getElementById('chatHistory');
+    chatHistoryDiv.appendChild(messageDiv);
+
+}
+
+
+//Create message Div element using message object(id,FkFromUserId,FromUserFullName,FkToUserId,ReceiverFullName,MessageContent);
+function CreateMessageDivEl(message) {
+    let messageDiv = document.createElement('div');
+    messageDiv.id = message.Id;
+    if (!currentUserId)
+        currentUserId = getCurrentUserId();
+    if (message.FkFromUserId == currentUserId) {
+        messageDiv.classList.add('conversation-item', 'item-right', 'clearfix');
+    } else {
+        messageDiv.classList.add('conversation-item', 'item-left', 'clearfix');
+    }
+    messageDiv.setAttribute('data-messageId', message.Id);
+    return messageDiv;
 
 }
 
 
 
+//Create User Div image of user
+function CreateUserDiv(message) {
+    let userDiv = document.createElement('div');
+    userDiv.classList.add('conversation-user');
+    let imgEl = document.createElement('img');
+    imgEl.src = '/Images/DefaultProfile.png';
+    imgEl.classList.add('img-responsive');
+    userDiv.appendChild(imgEl);
+    return userDiv;
+}
+//Create message Body of div name,time,message content
+function CreateMessageBoyDiv(message) {
+    let messageBodyDiv = document.createElement('div');
+    messageBodyDiv.classList.add('conversation-body');
 
+    let messageNameDiv = document.createElement('div');
+    messageNameDiv.classList.add('name');
+    messageNameDiv.textContent = message.SenderFullName;
+    messageBodyDiv.appendChild(messageNameDiv);
+    let messageTimeDiv = document.createElement('div');
+    messageTimeDiv.classList.add('time', 'hidden-xs');
+    messageTimeDiv.textContent = moment(message.CreationDate).fromNow();
+    messageBodyDiv.appendChild(messageTimeDiv);
+
+    let messageBodyText = document.createElement('div');
+    messageBodyDiv.classList.add('text');
+    messageBodyText.textContent = message.MessageContent;
+    messageBodyDiv.appendChild(messageBodyText);
+    return messageBodyDiv;
+}
 
 //Remove All Chat History
 function removeAllChildren(_node) {
@@ -220,7 +285,7 @@ function SwitchTabTo(liHrefAtt) {
     let tabs = divTabToActive.getElementsByTagName('li');
     for (var i = 0; i < tabs.length; i++) {
         let aEl = tabs[i].querySelector('a');
-        let href = aEl.getAttribute('href')
+        let href = aEl.getAttribute('href');
         if (href == liHrefAtt)
             aEl.click();
     }
@@ -332,11 +397,30 @@ function ready() {
         filterUsersBy(text);
     });
 
-    //TODO:AddEventListener to the sendMessage in tab friends
+    //AddEventListener to the sendMessage in tab friends
+    let liElFriends = ulFriendsEl.querySelectorAll('li[data-friendUserId]');
+    for (var i = 0; i < liElFriends.length; i++) {
+        let currentLiFriend = liElFriends[i];
+        addEventListenerToFriendLiElMessageButton(currentLiFriend);
+    }
 
+    //Add EventListener to the sendMessage button in tab chat
 
-
-
+    chatFormEl.addEventListener('submit', function (e) {
+        e.preventDefault();
+        if (!activeUserIdToChat || activeUserIdToChat == 0)
+            return;
+        let text = e.target[0].value;
+        e.target[0].value = "";
+        if (!text && text.length == 0) {
+            AlertError('Please Enter your message...');
+            return;
+        }
+            
+        chatConnection.invoke('SendMessage', currentUserId,activeUserIdToChat,text)
+            .catch((err) => alert("An exception accord on sending message from server side..."));
+        
+    });
     //AddEventListener to all request anchor
 
     requestAnchors = document.querySelectorAll('a[data-requestedUserId]');
@@ -353,15 +437,16 @@ function ready() {
     //AddEventListener to all request revert pending to handle accept button operation
     var acceptAnchors = document.querySelectorAll('a[data-acceptRequest]');
     acceptAnchors.forEach((el) => {
-        el.addEventListener('click', function (e) {
-            e.preventDefault();
-            let userIdRequestFrom = Number(e.target.getAttribute('data-acceptRequest'))
-            if (!userIdRequestFrom)
-                return;
-            if (!currentUserId)
-                currentUserId = getCurrentUserId();
-            handleAcceptRequestButton(currentUserId, userIdRequestFrom);
-        })
+        el.addEventListener('click',
+            function (e) {
+                e.preventDefault();
+                let userIdRequestFrom = Number(e.target.getAttribute('data-acceptRequest'));
+                if (!userIdRequestFrom)
+                    return;
+                if (!currentUserId)
+                    currentUserId = getCurrentUserId();
+                handleAcceptRequestButton(currentUserId, userIdRequestFrom);
+            });
     });
 }
 
@@ -406,7 +491,7 @@ document.addEventListener('DOMContentLoaded', ready);
 //    }
 
 //    activeRoomId = id;
-//    removeAllChildren(roomHistoryEl);
+//    removeAllChildren(chatHistoryDiv);
 
 //    if (!id) return;
 
@@ -418,7 +503,7 @@ document.addEventListener('DOMContentLoaded', ready);
 
 
 ////roomListEl.addEventListener('click', function (e) {
-////    roomHistoryEl.style.display = 'block';
+////    chatHistoryDiv.style.display = 'block';
 
 ////    setActiveRoomButton(e.target);
 
@@ -502,8 +587,8 @@ document.addEventListener('DOMContentLoaded', ready);
 //    newItem.appendChild(headerDiv);
 //    newItem.appendChild(messageDiv);
 
-//    roomHistoryEl.appendChild(newItem);
-//    roomHistoryEl.scrollTop = roomHistoryEl.scrollHeight - roomHistoryEl.clientHeight;
+//    chatHistoryDiv.appendChild(newItem);
+//    chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight - chatHistoryDiv.clientHeight;
 //}
 
 //function removeAllChildren(node) {
