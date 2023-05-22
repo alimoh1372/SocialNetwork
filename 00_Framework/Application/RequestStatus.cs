@@ -1,5 +1,8 @@
 ﻿namespace _00_Framework.Application
 {
+    /// <summary>
+    /// An enum to help the status of relation request between 2 Users
+    /// </summary>
     public enum RequestStatus
     {
         WithoutRequest = 0,

@@ -1,5 +1,8 @@
 ﻿namespace _00_Framework.Application
 {
+    /// <summary>
+    /// To encrypt the password
+    /// </summary>
     public interface IPasswordHasher
     {
         string Hash(string password);

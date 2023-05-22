@@ -37,17 +37,23 @@ namespace ServiceHosts
             string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
             SocialNetworkBootstrapper.Configure(services, connectionString);
 
-
+            //wire up and register the needed services
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthHelper, AuthHelper>();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
+
+            //To register the signalR
             services.AddSignalR();
+
+            //To set the cookie and policy behavior
             services.Configure<CookiePolicyOptions>(options =>
             {
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
+
+            //Set the authenticate pages
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, o =>
                 {
@@ -55,7 +61,11 @@ namespace ServiceHosts
                     o.LogoutPath = new PathString("/Index");
                     o.AccessDeniedPath = new PathString("/AccessDenied");
                 });
+            //To support the persian words in client side
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
+
+
+            //Define the policy needed 
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("ChatPage",
@@ -63,6 +73,8 @@ namespace ServiceHosts
                 options.AddPolicy("ChatHub",
                    builder => builder.RequireClaim("UserId"));
             });
+
+            //To set the Authentication policy to some pages,folder ,...
             services.AddRazorPages()
                 .AddRazorPagesOptions(options =>
                 {
@@ -95,6 +107,9 @@ namespace ServiceHosts
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
+                
+
+                //Define the signalR route
                 endpoints.MapHub<ChatHub>("/chatHub");
             });
         }

@@ -1,5 +1,9 @@
 ﻿namespace _00_Framework.Application
 {
+
+    /// <summary>
+    /// A model to using to authenticate
+    /// </summary>
     public class AuthViewModel
     {
         public long Id { get; set; }

@@ -10,6 +10,9 @@ using AuthenticationProperties = Microsoft.AspNetCore.Authentication.Authenticat
 
 namespace _00_Framework.Application
 {
+    /// <summary>
+    /// A helper class to Authentication and authorization
+    /// </summary>
     public class AuthHelper : IAuthHelper
     {
         private readonly IHttpContextAccessor _contextAccessor;
@@ -19,6 +22,10 @@ namespace _00_Framework.Application
             _contextAccessor = contextAccessor;
         }
 
+        /// <summary>
+        /// Get the current user identity info
+        /// </summary>
+        /// <returns></returns>
         public AuthViewModel CurrentAccountInfo()
         {
             var result = new AuthViewModel();
@@ -34,22 +41,22 @@ namespace _00_Framework.Application
       
         
 
-
+        /// <summary>
+        /// Specify the user was authenticated or not
+        /// </summary>
+        /// <returns></returns>
         public bool IsAuthenticated()
         {
             
             return _contextAccessor.HttpContext.User.Identity.IsAuthenticated;
 
-
-            //IsAuthenticated with user claims
-
-            //var claims = _contextAccessor.HttpContext.User.Claims.ToList();
-            ////if (claims.Count > 0)
-            ////    return true;
-            ////return false;
-            //return claims.Count > 0;
         }
 
+
+        /// <summary>
+        /// Sign in user and add claim principle in the cookie and redirect to main page
+        /// </summary>
+        /// <param name="account"></param>
         public void Signin(AuthViewModel account)
         {
            
@@ -71,6 +78,10 @@ namespace _00_Framework.Application
                 authProperties);
         }
 
+
+        /// <summary>
+        /// To sign out the current user
+        /// </summary>
         public void SignOut()
         {
             _contextAccessor.HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);

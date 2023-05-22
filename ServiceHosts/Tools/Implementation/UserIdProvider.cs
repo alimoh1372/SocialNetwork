@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace ServiceHosts.Tools.Implementation
 {
+    /// <summary>
+    /// To change the identity of user from <c>name</c> into <c>UserId</c>
+    /// </summary>
     public class UserIdProvider:IUserIdProvider
     {
         public string GetUserId(HubConnectionContext connection)

@@ -36,22 +36,31 @@ namespace SocialNetwork.Domain.MessageAgg
             IsRead = false;
         }
 
-
+        /// <summary>
+        /// To edit the message into <paramref name="messageContent"/>
+        /// </summary>
+        /// <param name="messageContent">New message text to edit</param>
         public void Edit(string messageContent)
         {
             MessageContent = messageContent;
         }
-
+        /// <summary>
+        /// To like the message
+        /// </summary>
         public void LikeMessage()
         {
             Like = true;
         }
-
+        /// <summary>
+        /// To unlike the message the default value is false
+        /// </summary>
         public void UnLike()
         {
             Like = false;
         }
-
+        /// <summary>
+        /// To set the <see cref="MessageContent"/> is read by receiver user
+        /// </summary>
         public void MessageAsRead()
         {
             IsRead = true;

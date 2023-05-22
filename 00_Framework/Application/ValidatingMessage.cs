@@ -1,5 +1,8 @@
 ﻿namespace _00_Framework.Application
 {
+    /// <summary>
+    /// ready message to use in validating 
+    /// </summary>
     public  static class ValidatingMessage
     {
         public const  string IsRequired= "برای ادامه لطفا این فیلد را پر نمائید.";

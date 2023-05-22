@@ -6,6 +6,9 @@ using SocialNetwork.Domain.MessageAgg;
 
 namespace SocialNetwork.Application
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class MessageApplication:IMessageApplication
     {
         private readonly IMessageRepository _messageRepository;

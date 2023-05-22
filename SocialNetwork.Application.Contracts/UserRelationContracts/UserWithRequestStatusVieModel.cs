@@ -3,6 +3,9 @@ using _00_Framework.Application;
 
 namespace SocialNetwork.Application.Contracts.UserRelationContracts
 {
+    /// <summary>
+    /// An Dto that show user some info with the request statuse
+    /// </summary>
     public class UserWithRequestStatusVieModel
     {
         //User that request sent to 

@@ -3,6 +3,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace SocialNetwork.Application.Contracts.MessageContracts
 {
+    /// <summary>
+    /// A Command model to send a message from user with Id=<see cref="FkFromUserId"/> to User with Id=<see cref="FkToUserId"/>
+    /// </summary>
     public class SendMessage        
     {
         [DisplayName("Message from")]

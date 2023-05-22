@@ -2,6 +2,9 @@
 
 namespace _00_Framework.Application
 {
+    /// <summary>
+    /// A model to showing the operation status and operation message
+    /// </summary>
     public class OperationResult
     {
         public bool IsSuccedded { get; set; }

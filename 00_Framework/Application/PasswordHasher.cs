@@ -5,8 +5,12 @@ using Microsoft.Extensions.Options;
 
 namespace _00_Framework.Application
 {
+    
     public class PasswordHasher : IPasswordHasher
     {
+        /// <summary>
+        /// <see cref="SaltSize"/>, <see cref="KeySize"/> and <see cref="Options"/> need to encrypt the password
+        /// </summary>
         private const int SaltSize = 16; // 128 bit 
         private const int KeySize = 32; // 256 bit
 
@@ -17,15 +21,30 @@ namespace _00_Framework.Application
 
         private HashingOptions Options { get; }
 
+
+        /// <summary>
+        /// encrypt the password
+        /// </summary>
+        /// <param name="password">the password given from the user</param>
+        /// <returns>The encrypted <see cref="password"/> with defined algorithm</returns>
         public string Hash(string password)
         {
+            //Make a algorithm to encrypting password
             using var algorithm = new Rfc2898DeriveBytes(password, SaltSize, Options.Iterations, HashAlgorithmName.SHA256);
             var key = Convert.ToBase64String(algorithm.GetBytes(KeySize));
             var salt = Convert.ToBase64String(algorithm.Salt);
 
+            
             return $"{Options.Iterations}.{salt}.{key}";
         }
 
+
+        /// <summary>
+        /// Check the <paramref name="password"/>  is current with the hashed password<paramref name="hash"/>"/>
+        /// </summary>
+        /// <param name="hash"></param>
+        /// <param name="password"></param>
+        /// <returns>Verified equals to <see langword="true"/>  if password equal to encrypted hash password</returns>
         public (bool Verified, bool NeedsUpgrade) Check(string hash, string password)
         {
             var parts = hash.Split('.', 3);

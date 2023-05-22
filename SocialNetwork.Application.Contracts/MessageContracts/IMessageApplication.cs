@@ -40,7 +40,22 @@ namespace SocialNetwork.Application.Contracts.MessageContracts
         /// <returns></returns>
         OperationResult AsRead(long id);
 
+        /// <summary>
+        /// To get All message between two user
+        /// </summary>
+        /// <param name="idUserA"></param>
+        /// <param name="idUserB"></param>
+        /// <returns>
+        /// List of <see cref="MessageViewModel"/> if there isn't any Message return <see langword="null"/>
+        /// </returns>
         Task<List<MessageViewModel>> LoadChatHistory(long idUserA, long idUserB);
+
+        /// <summary>
+        /// Get the Latest Message between two user
+        /// </summary>
+        /// <param name="fromUserId"></param>
+        /// <param name="toUserId"></param>
+        /// <returns> A <see cref="MessageViewModel"/></returns>
         Task<MessageViewModel> GetLatestMessage(long fromUserId, long toUserId);
     }
 }

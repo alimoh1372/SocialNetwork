@@ -24,10 +24,12 @@ namespace SocialNetwork.Application
 
             if (_userRepository.IsExists(x => x.Email == command.Email))
                 return operation.Failed(ApplicationMessage.Duplication);
-
+            //encrypt the password of user to save on database
             var password = _passwordHasher.Hash(command.Password);
             var account = new User(command.Name, command.LastName, command.Email, command.BirthDay,password,
                 command.AboutMe, "~/Images/DefaultProfile.png");
+
+            //add to database
             _userRepository.Create(account);
             _userRepository.SaveChanges();
             return operation.Succedded();
@@ -37,6 +39,7 @@ namespace SocialNetwork.Application
         {
 
             var operation = new OperationResult();
+            
             var user = _userRepository.Get(command.Id);
             if (user == null)
                 return operation.Failed(ApplicationMessage.NotFound);
@@ -76,17 +79,19 @@ namespace SocialNetwork.Application
 
         public  OperationResult Login(Login command)
         {
+            
             var operation = new OperationResult();
             var user = _userRepository.GetBy(command.UserName);
             if (user == null)
                 return  operation.Failed(ApplicationMessage.WrongUserPass);
-
+            //Compare the inserted password and the saved password
             var result = _passwordHasher.Check(user.Password, command.Password);
+            //if password wrong the operation failed
             if (!result.Verified  )
                 return operation.Failed(ApplicationMessage.WrongUserPass);
 
 
-
+            //Adding the identity items to the cookie of client
             var authViewModel = new AuthViewModel(user.Id, user.Email);
 
             _authHelper.Signin(authViewModel);
@@ -98,7 +103,11 @@ namespace SocialNetwork.Application
         {
             _authHelper.SignOut();
         }
-
+        /// <summary>
+        /// Get the information of user
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Task<UserViewModel> GetUserInfoAsyncBy(long id)
         {
            return _userRepository.GetUserInfoAsyncBy(id);

@@ -3,6 +3,9 @@ using SocialNetwork.Domain.UserAgg;
 
 namespace SocialNetwork.Domain.UserRelationAgg
 {
+    /// <summary>
+    /// The Entity and valueObject to handle the Relation of users between
+    /// </summary>
     public class UserRelation:EntityBase
     {
         public long FkUserAId { get; private set; }
