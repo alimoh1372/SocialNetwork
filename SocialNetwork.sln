@@ -9,12 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SN.Domain", "SN.Domain", "{
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Domain", "SocialNetwork.Domain\SocialNetwork.Domain.csproj", "{7794744E-3C6C-498E-8BC8-E4D88C84E1B7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documentation", "Documentation", "{1C5C8F65-1CD0-406C-8ED4-7810BC275E6D}"
-	ProjectSection(SolutionItems) = preProject
-		..\Task The Currency Convertor\Documantation1\Document V4.docx = ..\Task The Currency Convertor\Documantation1\Document V4.docx
-		..\Task The Currency Convertor\Documantation1\Documentation Excell.xlsx = ..\Task The Currency Convertor\Documantation1\Documentation Excell.xlsx
-	EndProjectSection
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "00_Framework", "00_Framework\00_Framework.csproj", "{6EDD259D-E3B8-46CB-8A56-C1ABF546C82A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SN.Application", "SN.Application", "{621E9587-E90D-4C26-A4D1-5F399750B1FB}"
@@ -31,7 +25,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SocialNetwork.Infrastructur
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceHosts", "ServiceHosts\ServiceHosts.csproj", "{99FC003F-9C51-4FF3-95EE-E347F4E65FF7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "01_SocialNetworkQuery", "01_SocialNetworkQuery\01_SocialNetworkQuery.csproj", "{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "01_SocialNetworkQuery", "01_SocialNetworkQuery\01_SocialNetworkQuery.csproj", "{EE2EF224-05B4-4DBE-9BFE-0785C82C96E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
