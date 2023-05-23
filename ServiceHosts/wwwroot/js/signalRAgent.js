@@ -64,7 +64,7 @@ chatConnection.on('addNewMessageToChatHistoryUlEl', addNewMessageToChatHistoryUl
 
 
 
-//Add new message to chat history
+//Add new message(Json) to chat history
 function addNewMessageToChatHistoryUlEl(message) {
     let newMessage = JSON.parse(message);
     appendChatItem(newMessage);
