@@ -197,11 +197,7 @@ function appendChatItems(chatItems) {
         //Add a message item to the chat history ul
         appendChatItem(_chatMessage);
     });
-    chatHistoryDiv = document.getElementById('chatHistory');
-    let items = chatHistoryDiv.querySelectorAll('div.conversation-item');
-    const latestItem = items[items.length - 1];
-    if (latestItem && latestItem.length > 0)
-        latestItem.scrollIntoView(true);
+    
 
 
 
