@@ -9,9 +9,11 @@ namespace SocialNetwork.Application.Contracts.MessageContracts
     public class EditMessage
     {
         public long Id { get; set; }
-
+        public long FkFromUserId { get;  set; }
+        public long FkToUserId { get;  set; }
         [DisplayName("Message text")]
         [Required]
         public string MessageContent { get;  set; }
     }
+
 }

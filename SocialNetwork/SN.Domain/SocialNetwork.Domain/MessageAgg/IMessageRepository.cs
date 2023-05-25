@@ -13,5 +13,6 @@ namespace SocialNetwork.Domain.MessageAgg
     {
         Task<List<MessageViewModel>> LoadChatHistory(long idUserA, long idUserB);
         Task<MessageViewModel> GetLatestMessageBy(long fromUserId, long toUserId);
+        Task<EditMessage> GetEditMessage(long id);
     }
 }

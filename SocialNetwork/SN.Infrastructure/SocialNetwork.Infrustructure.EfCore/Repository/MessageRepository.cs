@@ -31,28 +31,41 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
                     MessageContent = x.MessageContent
                 })
-                .Where(x=>(x.FkFromUserId== idUserA && x.FkToUserId==idUserB)
-                          ||(x.FkFromUserId==idUserB && x.FkToUserId==idUserA))
+                .Where(x => (x.FkFromUserId == idUserA && x.FkToUserId == idUserB)
+                          || (x.FkFromUserId == idUserB && x.FkToUserId == idUserA))
                 .ToListAsync();
         }
 
         public async Task<MessageViewModel> GetLatestMessageBy(long fromUserId, long toUserId)
         {
-           return await _context.Messages
-                .Include(x => x.FromUser)
-                .Include(x => x.ToUser)
-                .Select(x => new MessageViewModel
-                {
-                    Id = x.Id,
-                    CreationDate = x.CreationDate,
-                    FkFromUserId = x.FkFromUserId,
-                    SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
-                    FkToUserId = x.FkToUserId,
-                    ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
-                    MessageContent = x.MessageContent
-                }).
-                OrderBy(x=>x.Id).
-                LastOrDefaultAsync(x => x.FkFromUserId == fromUserId && x.FkToUserId == toUserId);
+            return await _context.Messages
+                 .Include(x => x.FromUser)
+                 .Include(x => x.ToUser)
+                 .Select(x => new MessageViewModel
+                 {
+                     Id = x.Id,
+                     CreationDate = x.CreationDate,
+                     FkFromUserId = x.FkFromUserId,
+                     SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
+                     FkToUserId = x.FkToUserId,
+                     ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
+                     MessageContent = x.MessageContent
+                 }).
+                 OrderBy(x => x.Id).
+                 LastOrDefaultAsync(x => x.FkFromUserId == fromUserId && x.FkToUserId == toUserId);
+        }
+
+        public async Task<EditMessage> GetEditMessage(long id)
+        {
+            return await _context.Messages.Select(x => new EditMessage
+            {
+                Id = x.Id,
+                FkFromUserId = x.FkFromUserId,
+                FkToUserId = x.FkToUserId,
+                MessageContent = x.MessageContent
+            })
+                .FirstOrDefaultAsync(x => x.Id == id);
+
         }
     }
 }

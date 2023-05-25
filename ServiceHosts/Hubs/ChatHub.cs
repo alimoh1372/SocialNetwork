@@ -73,7 +73,7 @@ namespace ServiceHosts.Hubs
 
         public async Task SendMessage(long fromUserId, long toUserId, string message)
         {
-            //Todo:Implementing send Message
+
             var command = new SendMessage
             {
                 FkFromUserId = fromUserId,
@@ -83,13 +83,47 @@ namespace ServiceHosts.Hubs
             OperationResult result = _messageApplication.Send(command);
             if (result.IsSuccedded)
             {
-               var messageViewModel= _messageApplication.GetLatestMessage(fromUserId, toUserId);
-               var jsonMessage = JsonSerializer.Serialize(messageViewModel.Result);
-                    await Clients.Users(fromUserId.ToString(), toUserId.ToString())
-                    .SendAsync("addNewMessageToChatHistoryUlEl", jsonMessage);
+                var messageViewModel = _messageApplication.GetLatestMessage(fromUserId, toUserId);
+                var jsonMessage = JsonSerializer.Serialize(messageViewModel.Result);
+                await Clients.Users(fromUserId.ToString(), toUserId.ToString())
+                .SendAsync("addNewMessageToChatHistoryUlEl", jsonMessage);
             }
             else
             {
+                await Clients.Caller.SendAsync("ShowError", result.Message);
+            }
+        }
+
+        public async Task EditMessage(long id, string messageContext)
+        {
+            //Get the edit model of message
+            var message = await _messageApplication.GetEditMessageBy(id);
+
+            //check if it isn't exist
+            if (message == null)
+            {
+                await Clients.Caller.SendAsync("ShowError", ApplicationMessage.NotFound);
+                return;
+            }
+            //renew the message
+            message.MessageContent = messageContext;
+            
+
+            //Go to operate editing
+            var result = _messageApplication.Edit(message);
+
+            if (result.IsSuccedded)
+            {
+
+                //Send the response to the clients ui
+                var jsonMessage = JsonSerializer.Serialize(message);
+                await Clients.Users(message.FkFromUserId.ToString(), message.FkToUserId.ToString())
+                    .SendAsync("EditMessage", message);
+
+            }
+            else
+            {
+                //if happening any error show the error on client side
                 await Clients.Caller.SendAsync("ShowError", result.Message);
             }
         }

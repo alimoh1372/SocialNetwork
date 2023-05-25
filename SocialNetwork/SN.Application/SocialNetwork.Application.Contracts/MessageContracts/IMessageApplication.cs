@@ -58,5 +58,12 @@ namespace SocialNetwork.Application.Contracts.MessageContracts
         /// <param name="toUserId"></param>
         /// <returns> A <see cref="MessageViewModel"/></returns>
         Task<MessageViewModel> GetLatestMessage(long fromUserId, long toUserId);
+
+        /// <summary>
+        /// Get The edit model=<see cref="EditMessage"/> 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns><see langword="null"/> if there isn't any message with <paramref name="id"/></returns>
+        Task<EditMessage> GetEditMessageBy(long id);
     }
 }

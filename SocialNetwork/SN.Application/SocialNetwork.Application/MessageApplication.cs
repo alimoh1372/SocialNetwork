@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using _00_Framework.Application;
 using SocialNetwork.Application.Contracts.MessageContracts;
@@ -42,7 +43,15 @@ namespace SocialNetwork.Application
 
         public OperationResult Edit(EditMessage command)
         {
-            throw new System.NotImplementedException();
+            var operationResult = new OperationResult();    
+            var message = _messageRepository.Get(command.Id);
+            if (message == null)
+                return operationResult.Failed(ApplicationMessage.NotFound);
+            if (message.CreationDate.AddMinutes(+3) < DateTime.Now)
+                return operationResult.Failed(ApplicationMessage.EditTimeOver);
+            message.Edit(command.MessageContent);
+            return operationResult.Succedded();
+
         }
 
         public OperationResult Like(long id)
@@ -70,6 +79,11 @@ namespace SocialNetwork.Application
         public async Task<MessageViewModel> GetLatestMessage(long fromUserId, long toUserId)
         {
             return await _messageRepository.GetLatestMessageBy(fromUserId,toUserId);
+        }
+
+        public async Task<EditMessage> GetEditMessageBy(long id)
+        {
+            return await _messageRepository.GetEditMessage(id);
         }
     }
 }
