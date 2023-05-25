@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using SocialNetwork.Domain.MessageAgg;
 
+
 namespace SocialNetwork.Infrastructure.EfCore.Mapping
 {
     public class MessageMapping:IEntityTypeConfiguration<Message>

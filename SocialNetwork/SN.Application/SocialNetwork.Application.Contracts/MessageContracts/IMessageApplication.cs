@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using _00_Framework.Application;
 
+
 namespace SocialNetwork.Application.Contracts.MessageContracts
 {
     public interface IMessageApplication

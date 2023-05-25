@@ -1,4 +1,5 @@
-﻿using _00_Framework.Domain;
+﻿
+using _00_Framework.Domain;
 using SocialNetwork.Domain.UserAgg;
 
 namespace SocialNetwork.Domain.MessageAgg

@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using _01_SocialNetworkQuery.Contracts;
 using SocialNetwork.Application.Contracts.MessageContracts;
 
+
 namespace _01_SocialNetworkQuery.Implementations
 {
     public class MessageQuery:IMessageQuery

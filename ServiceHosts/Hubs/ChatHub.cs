@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using _00_Framework.Application;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.SignalR;
-using Newtonsoft.Json;
+
 using SocialNetwork.Application.Contracts.MessageContracts;
 using SocialNetwork.Application.Contracts.UserContracts;
 using SocialNetwork.Application.Contracts.UserRelationContracts;

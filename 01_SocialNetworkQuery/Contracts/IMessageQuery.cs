@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using SocialNetwork.Application.Contracts.MessageContracts;
 
 namespace _01_SocialNetworkQuery.Contracts
 {

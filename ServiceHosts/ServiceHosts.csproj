@@ -13,7 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\01_SocialNetworkQuery\01_SocialNetworkQuery.csproj" />
-    <ProjectReference Include="..\SocialNetwork.Infrastructure.Configuration\SocialNetwork.Infrastructure.Configuration.csproj" />
+    <ProjectReference Include="..\SocialNetwork\SN.Infrastructure\SocialNetwork.Infrastructure.Configuration\SocialNetwork.Infrastructure.Configuration.csproj" />
   </ItemGroup>
 
   <ItemGroup>

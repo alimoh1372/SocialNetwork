@@ -8,12 +8,10 @@
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="5.0.0" />
   </ItemGroup>
 
-  
-
   <ItemGroup>
-    <ProjectReference Include="..\01_SocialNetworkQuery\01_SocialNetworkQuery.csproj" />
-    <ProjectReference Include="..\SocialNetwork.Application\SocialNetwork.Application.csproj" />
-    <ProjectReference Include="..\SocialNetwork.Domain\SocialNetwork.Domain.csproj" />
+    <ProjectReference Include="..\..\..\01_SocialNetworkQuery\01_SocialNetworkQuery.csproj" />
+    <ProjectReference Include="..\..\SN.Application\SocialNetwork.Application\SocialNetwork.Application.csproj" />
+    <ProjectReference Include="..\..\SN.Domain\SocialNetwork.Domain\SocialNetwork.Domain.csproj" />
     <ProjectReference Include="..\SocialNetwork.Infrustructure.EfCore\SocialNetwork.Infrastructure.EfCore.csproj" />
   </ItemGroup>
 

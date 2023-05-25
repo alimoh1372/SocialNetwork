@@ -6,7 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\SocialNetwork.Application.Contracts\SocialNetwork.Application.Contracts.csproj" />
+    <ProjectReference Include="..\00_Framework\00_Framework.csproj" />
+    <ProjectReference Include="..\SocialNetwork\SN.Application\SocialNetwork.Application.Contracts\SocialNetwork.Application.Contracts.csproj" />
   </ItemGroup>
 
 </Project>

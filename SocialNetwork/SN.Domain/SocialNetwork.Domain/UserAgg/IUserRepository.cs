@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using _00_Framework.Domain;
 using SocialNetwork.Application.Contracts.UserContracts;
 
+
 namespace SocialNetwork.Domain.UserAgg
 {
     public interface IUserRepository:IBaseRepository<long,User>

@@ -1,4 +1,6 @@
-﻿using _01_SocialNetworkQuery.Contracts;
+﻿
+
+using _01_SocialNetworkQuery.Contracts;
 using _01_SocialNetworkQuery.Implementations;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
