@@ -20,7 +20,7 @@
                 <div class="profile-status" style="display: none">
                     <i class="fa fa-check-circle"></i> Online
                 </div>
-                <img src="~/Images/DefaultProfile.png"
+                <img src="@Model.UserInfo.ProfilePicture"
                      alt=""
                      class="profile-img img-responsive center-block" />
             </div>
@@ -30,8 +30,8 @@
             <div class="main-box clearfix">
                 <div class="profile-header">
                     <h3><span>User info</span></h3>
-                    <a href="#" class="btn btn-primary edit-profile">
-                        <i class="fa fa-pencil-square fa-lg"></i> Edit profile
+                    <a asp-page="/EditProfilePicture" asp-route-id="@Model.UserInfo.Id" class="btn btn-primary edit-profile">
+                        <i class="fa fa-pencil-square fa-lg"></i> Edit profile Picture
                     </a>
                     <a id="btnRefresh" asp-page="/ChatPage" class="btn btn-info pull-right">
                         <i class="fa fa-refresh fa-lg"> </i> Refresh page

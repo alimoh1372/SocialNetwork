@@ -32,7 +32,7 @@ namespace SocialNetwork.Application
             //encrypt the password of user to save on database
             var password = _passwordHasher.Hash(command.Password);
             var account = new User(command.Name, command.LastName, command.Email, command.BirthDay, password,
-                command.AboutMe, "~/Images/DefaultProfile.png");
+                command.AboutMe, "/Images/DefaultProfile.png");
 
             //add to database
             _userRepository.Create(account);

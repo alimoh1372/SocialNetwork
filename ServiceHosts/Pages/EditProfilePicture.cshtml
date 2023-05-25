@@ -12,25 +12,27 @@
     </div>
 }
 
-<form method="post">
+<form method="post"
+      enctype="multipart/form-data">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group text-center">
-                <img src="~/@Model.EditProfilePicture.PreviousProfilePicture" class="image" style="width: 100px; height: 100px;" />
+                <img src="@Model.EditProfilePicture.PreviousProfilePicture" class="image" style="width: 100px; height: 100px;" />
+                <input type="hidden" name="PreviousProfilePicture"  value="@Model.EditProfilePicture.PreviousProfilePicture"/>
                 <label>Previous picture</label>
             </div>
         </div>
         <div class="col-md-12">
             <div class="form-group">
                 <label asp-for="EditProfilePicture.ProfilePicture" class="control-label"></label>
-                <input type="file" class="form-control" asp-for="EditProfilePicture.ProfilePicture" accept="image/*">
+                <input type="file" id="ProfilePicture" name="ProfilePicture" class="form-control"  accept="image/*">
                 <span asp-validation-for="EditProfilePicture.ProfilePicture" class="error"></span>
             </div>
         </div>
-        <input type="hidden" asp-for="EditProfilePicture.Id"/>
+        <input type="hidden" asp-for="EditProfilePicture.Id" value="@Model.EditProfilePicture.Id"/>
     </div>
     <div class="row">
-        <button asp-page="/Index" type="button" class="btn btn-default" >بازگشت</button>
+        <button asp-page="/ChatPage" type="button" class="btn btn-default" >بازگشت</button>
         <button type="submit" class="btn btn-info">ثبت ویرایش</button>
     </div>
 </form>

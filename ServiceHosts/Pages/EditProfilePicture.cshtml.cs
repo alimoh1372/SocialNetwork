@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using _00_Framework.Application;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using SocialNetwork.Application.Contracts.UserContracts;
 
 namespace ServiceHosts.Pages
 {
+    [Authorize]
     public class EditProfilePictureModel : PageModel
     {
         [TempData] public string Message { get; set; }
@@ -26,12 +28,14 @@ namespace ServiceHosts.Pages
 
         }
 
-        public async void OnPost(EditProfilePicture command)
+        public async Task<IActionResult> OnPost(EditProfilePicture command)
         {
-            OperationResult result =await _userApplication.ChangeProfilePicture(command);
+            OperationResult result = await _userApplication.ChangeProfilePicture(command);
             if (result.IsSuccedded)
-                RedirectToPage("/Index");
+                return RedirectToPage("/ChatPage");
+
             Message = result.Message;
+            return Page();
         }
     }
 }

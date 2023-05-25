@@ -47,9 +47,9 @@ namespace ServiceHosts.Pages
         public IActionResult OnPostRegister(CreateUser command)
         {
             var result = _userApplication.Create(command);
+            RegisterMessage = result.Message;
             if (result.IsSuccedded)
                 return RedirectToPage("/ChatPage");
-            RegisterMessage = result.Message;
             return RedirectToPage("/Index");
         }
        
