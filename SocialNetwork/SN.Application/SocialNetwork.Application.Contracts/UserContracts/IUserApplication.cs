@@ -15,13 +15,21 @@ namespace SocialNetwork.Application.Contracts.UserContracts
 
         OperationResult ChangePassword(ChangePassword command);
         EditUser GetDetails(long id);
+
+        /// <summary>
+        /// Get The information of user to edit profile picture
+        /// </summary>
+        /// <param name="id">user id</param>
+        /// <returns></returns>
+        Task<EditProfilePicture> GetEditProfileDetails(long id);
+
         /// <summary>
         /// Filter users with the <paramref name="searchModel"/>
         /// </summary>
         /// <param name="searchModel"></param>
         /// <returns></returns>
        Task<List<UserViewModel>> SearchAsync(SearchModel searchModel);
-
+        Task<OperationResult> ChangeProfilePicture(EditProfilePicture command);
 
        OperationResult Login(Login command);
        void Logout();
@@ -31,13 +39,5 @@ namespace SocialNetwork.Application.Contracts.UserContracts
         /// <param name="id"></param>
         /// <returns></returns>
        Task<UserViewModel> GetUserInfoAsyncBy(long id);
-    }
-
-   
-
-    public class Login
-    {
-        public string UserName { get; set; }
-        public string Password { get; set; }
     }
 }

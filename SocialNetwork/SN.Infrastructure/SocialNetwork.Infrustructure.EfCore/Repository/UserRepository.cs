@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using _00_Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +27,16 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                 AboutMe = x.AboutMe,
                 ProfilePicture = x.ProfilePicture
             }).FirstOrDefault(x=>x.Id==id);
+        }
+
+        public async Task<EditProfilePicture> GetAsyncEditProfilePicture(long id)
+        {
+            return await _context.Users.Select(x => new EditProfilePicture
+                {
+                    Id = x.Id,
+                    PreviousProfilePicture = x.ProfilePicture
+                })
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public Task<List<UserViewModel>> SearchAsync(SearchModel searchModel)

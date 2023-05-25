@@ -1,0 +1,36 @@
+﻿@page "{id}"
+@model ServiceHosts.Pages.EditProfilePictureModel
+@{
+    ViewData["Title"] = "Edit profile picture";
+}
+@if (!string.IsNullOrWhiteSpace(Model.Message))
+{
+    <div class="row">
+        <div class="col-md-12 error" >
+            @Model.Message
+        </div>
+    </div>
+}
+
+<form method="post">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group text-center">
+                <img src="~/@Model.EditProfilePicture.PreviousProfilePicture" class="image" style="width: 100px; height: 100px;" />
+                <label>Previous picture</label>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label asp-for="EditProfilePicture.ProfilePicture" class="control-label"></label>
+                <input type="file" class="form-control" asp-for="EditProfilePicture.ProfilePicture" accept="image/*">
+                <span asp-validation-for="EditProfilePicture.ProfilePicture" class="error"></span>
+            </div>
+        </div>
+        <input type="hidden" asp-for="EditProfilePicture.Id"/>
+    </div>
+    <div class="row">
+        <button asp-page="/Index" type="button" class="btn btn-default" >بازگشت</button>
+        <button type="submit" class="btn btn-info">ثبت ویرایش</button>
+    </div>
+</form>

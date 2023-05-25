@@ -11,11 +11,13 @@ using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 using System.Threading.Tasks;
+using _0_Framework.Application;
 using _00_Framework.Application;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using ServiceHosts.Hubs;
+using ServiceHosts.Tools;
 using ServiceHosts.Tools.Implementation;
 using SocialNetwork.Infrastructure.Configuration;
 
@@ -43,7 +45,7 @@ namespace ServiceHosts
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IAuthHelper, AuthHelper>();
             services.AddSingleton<IUserIdProvider, UserIdProvider>();
-
+            services.AddTransient<IFileUpload, FileUpload>();
             //To register the signalR
             services.AddSignalR();
 

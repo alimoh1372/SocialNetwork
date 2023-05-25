@@ -58,8 +58,6 @@ namespace SocialNetwork.Domain.UserAgg
             Password = password;
             AboutMe = aboutMe;
             ProfilePicture = profilePicture;
-
-
         }
         /// <summary>
         /// Edit User properties that editable
@@ -67,12 +65,21 @@ namespace SocialNetwork.Domain.UserAgg
         /// <param name="name"></param>
         /// <param name="lastName"></param>
         /// <param name="aboutMe"></param>
-        /// <param name="profilePicture"></param>
-        public void Edit(string name, string lastName, string aboutMe, string profilePicture)
+        
+        public void Edit(string name, string lastName, string aboutMe)
         {
             Name = name;
             LastName = lastName;
             AboutMe = aboutMe;
+        }
+        /// <summary>
+        /// Edit the profile picture 
+        /// </summary>
+        /// <param name="profilePicture">string address from root</param>
+        public void EditProfilePicture(string profilePicture)
+        {
+            if (string.IsNullOrWhiteSpace(profilePicture))
+                return;
             ProfilePicture = profilePicture;
         }
         /// <summary>

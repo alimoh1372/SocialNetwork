@@ -23,40 +23,6 @@
                 <img src="~/Images/DefaultProfile.png"
                      alt=""
                      class="profile-img img-responsive center-block" />
-                <div id="admin" data-current class="profile-label" style="display: none">
-                    <span class="label label-danger">Admin</span>
-                </div>
-
-                <div class="profile-stars" style="display: none">
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star-o"></i>
-                    <span>Super User</span>
-                </div>
-
-                <div class="profile-since">Member since: Jan 2012</div>
-
-                <div class="profile-details">
-                    <ul class="fa-ul">
-                        <li>
-                            <i class="fa-li fa fa-truck"></i>Orders: <span>456</span>
-                        </li>
-                        <li>
-                            <i class="fa-li fa fa-comment"></i>Posts: <span>828</span>
-                        </li>
-                        <li>
-                            <i class="fa-li fa fa-tasks"></i>Tasks done: <span>1024</span>
-                        </li>
-                    </ul>
-                </div>
-
-                <div class="profile-message-btn center-block text-center" style="display: none">
-                    <a href="#" class="btn btn-success">
-                        <i class="fa fa-envelope"></i> Send message
-                    </a>
-                </div>
             </div>
         </div>
         <!--End User Info leftSide -->
@@ -72,8 +38,8 @@
                     </a>
                 </div>
                 <!--Start User Info Center panel for user detail -->
-                <input type="hidden" id="UserId" value="@Model.UserInfo.Id" />
-                <input type="hidden" id="UserName" value="@Model.UserInfo.Email" />
+                @*<input type="hidden" id="UserId" value="@Model.UserInfo.Id" />
+                <input type="hidden" id="UserName" value="@Model.UserInfo.Email" />*@
                 <div id="UserInfoCenterDiv" class="row profile-user-info">
                     <div class="col-sm-8">
 
@@ -97,31 +63,6 @@
                                 @Model.UserInfo.Email
                             </div>
                         </div>
-                        <div class="profile-user-details clearfix" style="display: none;">
-                            <div class="profile-user-details-label">Phone number</div>
-                            <div class="profile-user-details-value">
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4 profile-social" style="display: none">
-                        <ul class="fa-ul">
-                            <li>
-                                <i class="fa-li fa fa-twitter-square"></i><a href="#">scjohansson</a>
-                            </li>
-                            <li>
-                                <i class="fa-li fa fa-linkedin-square"></i><a href="#">John Doe </a>
-                            </li>
-                            <li>
-                                <i class="fa-li fa fa-facebook-square"></i><a href="#">John Doe </a>
-                            </li>
-                            <li>
-                                <i class="fa-li fa fa-skype"></i><a href="#">Black_widow</a>
-                            </li>
-                            <li>
-                                <i class="fa-li fa fa-instagram"></i><a href="#">Avenger_Scarlett</a>
-                            </li>
-                        </ul>
                     </div>
                 </div>
                 <!--End User Info Center panel for user detail -->
