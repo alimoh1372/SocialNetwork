@@ -16,16 +16,16 @@ using SocialNetwork.Infrastructure.EfCore.Repository;
 
 namespace SocialNetwork.Infrastructure.Configuration
 {
-    public  class SocialNetworkBootstrapper
+    public class SocialNetworkBootstrapper
     {
         /// <summary>
         /// wire up the Social network needed injection
         /// </summary>
         /// <param name="services"></param>
-        /// <param name="connectionString">wire up the context of system with this connection string</param>
-        public static void Configure(IServiceCollection services, string connectionString)
+
+        public static void Configure(IServiceCollection services)
         {
-            services.AddTransient<IUserRepository,UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserApplication, UserApplication>();
 
             services.AddTransient<IUserRelationApplication, UserRelationApplication>();
@@ -38,7 +38,8 @@ namespace SocialNetwork.Infrastructure.Configuration
             services.AddTransient<IUserQuery, UserQuery>();
             services.AddTransient<IUserRelationQuery, UserRelationQuery>();
             services.AddTransient<IMessageQuery, MessageQuery>();
-            services.AddDbContext<SocialNetworkContext>(x => x.UseSqlServer(connectionString));
+            services.AddDbContext<SocialNetworkContext>(x =>
+                x.UseInMemoryDatabase("SocialNetworkDb"));
         }
     }
 }

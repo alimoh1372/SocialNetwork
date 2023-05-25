@@ -36,7 +36,7 @@ namespace ServiceHosts
         {
             // string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
             string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
-            SocialNetworkBootstrapper.Configure(services, connectionString);
+            SocialNetworkBootstrapper.Configure(services);
 
             //wire up and register the needed services
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
@@ -104,7 +104,6 @@ namespace ServiceHosts
             app.UseRouting();
 
             app.UseAuthorization();
-            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
