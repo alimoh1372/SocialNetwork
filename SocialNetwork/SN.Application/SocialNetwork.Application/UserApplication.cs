@@ -87,9 +87,11 @@ namespace SocialNetwork.Application
             var previousPictureAddress = user.ProfilePicture;
             var basePath = $"/UploadFiles/Users";
             var newPicturePath = _fileUpload.UploadFile(command.ProfilePicture, basePath);
-            if(string.IsNullOrWhiteSpace(newPicturePath))
-                return  await Task.FromResult(operationResult.Failed(ApplicationMessage.OperationFailed));
-            _fileUpload.DeleteFile(previousPictureAddress);
+            if (string.IsNullOrWhiteSpace(newPicturePath))
+                return await Task.FromResult(operationResult.Failed(ApplicationMessage.OperationFailed));
+
+            if (previousPictureAddress != "/Images/DefaultProfile.png")
+                _fileUpload.DeleteFile(previousPictureAddress);
             user.EditProfilePicture(newPicturePath);
             _userRepository.SaveChanges();
             return operationResult.Succedded();

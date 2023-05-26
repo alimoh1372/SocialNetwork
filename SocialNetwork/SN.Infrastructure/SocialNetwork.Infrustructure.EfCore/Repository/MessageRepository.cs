@@ -27,8 +27,10 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     CreationDate = x.CreationDate,
                     FkFromUserId = x.FkFromUserId,
                     SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
+                    FromUserProfilePicture=x.FromUser.ProfilePicture,
                     FkToUserId = x.FkToUserId,
                     ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
+                    ToUserProfilePicture=x.ToUser.ProfilePicture,
                     MessageContent = x.MessageContent
                 })
                 .Where(x => (x.FkFromUserId == idUserA && x.FkToUserId == idUserB)
@@ -47,8 +49,10 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                      CreationDate = x.CreationDate,
                      FkFromUserId = x.FkFromUserId,
                      SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
+                     FromUserProfilePicture = x.FromUser.ProfilePicture,
                      FkToUserId = x.FkToUserId,
                      ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
+                     ToUserProfilePicture = x.ToUser.ProfilePicture,
                      MessageContent = x.MessageContent
                  }).
                  OrderBy(x => x.Id).
@@ -66,6 +70,26 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
             })
                 .FirstOrDefaultAsync(x => x.Id == id);
 
+        }
+
+        public async Task<MessageViewModel> GetMessageViewModeGetViewModelBy(long id)
+        {
+            return await _context.Messages
+                    .Include(x => x.FromUser)
+                    .Include(x => x.ToUser)
+                    .Select(x => new MessageViewModel
+                    {
+                        Id = x.Id,
+                        CreationDate = x.CreationDate,
+                        FkFromUserId = x.FkFromUserId,
+                        SenderFullName = x.FromUser.Name + " " + x.FromUser.LastName,
+                        FromUserProfilePicture = x.FromUser.ProfilePicture,
+                        FkToUserId = x.FkToUserId,
+                        ReceiverFullName = x.ToUser.Name + " " + x.ToUser.LastName,
+                        ToUserProfilePicture = x.ToUser.ProfilePicture,
+                        MessageContent = x.MessageContent
+                    })
+                .FirstOrDefaultAsync(x => x.Id == id);
         }
     }
 }

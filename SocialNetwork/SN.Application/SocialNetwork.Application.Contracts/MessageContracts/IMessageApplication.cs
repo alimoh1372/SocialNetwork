@@ -65,5 +65,7 @@ namespace SocialNetwork.Application.Contracts.MessageContracts
         /// <param name="id"></param>
         /// <returns><see langword="null"/> if there isn't any message with <paramref name="id"/></returns>
         Task<EditMessage> GetEditMessageBy(long id);
+
+        Task<MessageViewModel> GetMessageViewModelBy(long id);
     }
 }

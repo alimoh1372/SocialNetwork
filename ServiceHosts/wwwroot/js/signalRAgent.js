@@ -2,7 +2,7 @@
 var requestAnchors;
 var TableAllUsers;
 var ulFriendsEl;
-var inputsearchAllUsers;
+var inputSearchAllUsers;
 var currentUserName = '';
 var currentUserId = 0;
 var container = document.getElementById('toBlur');
@@ -53,7 +53,7 @@ chatConnection.on('updateRequestRowAddPending', updateRequestRowAddPendingToIt);
 
 //Update requested user row in AllUsers Table and add Accept button to it
 //Give the id of user that send relationship request
-chatConnection.on('updateRequestRowAddAcceptButton', updateRequestRowAddAcceptButton)
+chatConnection.on('updateRequestRowAddAcceptButton', updateRequestRowAddAcceptButton);
 
 chatConnection.on('handleAfterAcceptedRequest', handleAfterAcceptedRequest);
 
@@ -62,7 +62,28 @@ chatConnection.on('ShowError', AlertError);
 
 chatConnection.on('addNewMessageToChatHistoryUlEl', addNewMessageToChatHistoryUlEl);
 
+chatConnection.on('EditMessage', EditMessage);
 
+
+
+//EditMessage in the front
+function EditMessage(message) {
+    let editedMessage = message;
+    if (!editedMessage && editedMessage.length == 0)
+        return;
+    if (!currentUserId && currentUserId == 0) {
+        currentUserId = getCurrentUserId();
+    }
+    //Adding message to the chat history break each part to apart function such createBody,CreateImage,CreateMessageContent...
+
+    let messageDiv = document.getElementById(message.id);
+    if (!messageDiv && messageDiv.length == 0) {
+        AlertError("the message dive not found");
+        return;
+    }
+    let messageBodyText = messageDiv.getElementsByClassName('text')[0];
+    messageBodyText.textContent = message.messageContent;
+}
 
 //Add new message(Json) to chat history
 function addNewMessageToChatHistoryUlEl(message) {
@@ -197,7 +218,7 @@ function appendChatItems(chatItems) {
         //Add a message item to the chat history ul
         appendChatItem(_chatMessage);
     });
-    
+
 
 
 
@@ -249,7 +270,10 @@ function CreateUserDiv(message) {
     let userDiv = document.createElement('div');
     userDiv.classList.add('conversation-user');
     let imgEl = document.createElement('img');
-    imgEl.src = '/Images/DefaultProfile.png';
+    imgEl.src = message.FromUserProfilePicture;
+
+
+
     imgEl.classList.add('img-responsive');
     userDiv.appendChild(imgEl);
     return userDiv;
@@ -269,9 +293,60 @@ function CreateMessageBoyDiv(message) {
     messageBodyDiv.appendChild(messageTimeDiv);
 
     let messageBodyText = document.createElement('div');
-    messageBodyDiv.classList.add('text');
+    messageBodyText.classList.add('text');
     messageBodyText.textContent = message.MessageContent;
     messageBodyDiv.appendChild(messageBodyText);
+
+    //Set the Edit message Feature to message life is less than 3 minute
+
+    var messageEditBtn;
+    var editMessageContentDiv;
+    let creationTimePlus3Minute = moment(message.CreationDate).add(3, 'minutes').toDate();
+    let currentUserId = getCurrentUserId();
+    if (creationTimePlus3Minute > new Date() && currentUserId == message.FkFromUserId) {
+        let millisecondCanEdit = creationTimePlus3Minute.getTime() - new Date().getTime();
+        messageEditBtn = document.createElement('a');
+        messageEditBtn.href = "";
+        messageEditBtn.classList.add('btn', 'btn-primary', 'pull-right');
+        messageEditBtn.textContent = 'Edit Message';
+        messageEditBtn.setAttribute('data-editMessage', message.Id);
+        messageBodyDiv.appendChild(messageEditBtn);
+
+        messageEditBtn.addEventListener('click',
+            function (e) {
+                e.preventDefault();
+                editMessageContentDiv = document.createElement('div');
+                editMessageContentDiv.classList.add('text');
+                let textArea = document.createElement('textarea');
+                textArea.value = message.MessageContent;
+                editMessageContentDiv.appendChild(textArea);
+                editMessageContentDiv.setAttribute('data-editMessage', message.Id);
+                let messageSaveEditBtn = document.createElement('a');
+                messageSaveEditBtn.classList.add('btn', 'btn-success', 'pull-right');
+                messageSaveEditBtn.textContent = 'Save';
+                messageSaveEditBtn.setAttribute('data-editMessage', message.Id);
+                editMessageContentDiv.appendChild(messageSaveEditBtn);
+                messageSaveEditBtn.addEventListener('click',
+                    function (e) {
+                        e.preventDefault();
+                        let editMessageContent = textArea.value;
+                        let messageId = message.Id;
+                        chatConnection.invoke('EditMessage', messageId, editMessageContent);
+                    });
+                messageBodyDiv.appendChild(editMessageContentDiv);
+            });
+        setTimeout(() => {
+            let editMessageItems = document.querySelectorAll('[data-editMessage="' + message.Id + '"]');
+            let messageId = message.Id;
+            for (var i = 0; i < editMessageItems.length; i++) {
+                let currentItem = editMessageItems[i];
+                if (currentItem.getAttribute('data-editMessage') == messageId) {
+                    currentItem.remove();
+                }
+            }
+        }, millisecondCanEdit);
+    }
+
     return messageBodyDiv;
 }
 
@@ -393,10 +468,10 @@ function ready() {
     ulFriendsEl = document.getElementById('UlFriends');
     currentUserId = getCurrentUserId();
     TableAllUsers = document.getElementById('TableAllUsers');
-    inputsearchAllUsers = document.getElementById('searchAllUsers');
+    inputSearchAllUsers = document.getElementById('searchAllUsers');
 
     //Event listener to filter users when changed
-    inputsearchAllUsers.addEventListener('input', (e) => {
+    inputSearchAllUsers.addEventListener('input', (e) => {
 
         let text = e.target.value;
         filterUsersBy(text);

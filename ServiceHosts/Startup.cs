@@ -36,9 +36,9 @@ namespace ServiceHosts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
-            string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
-            SocialNetworkBootstrapper.Configure(services);
+             string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
+            //string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
+            SocialNetworkBootstrapper.Configure(services,connectionString);
 
             //wire up and register the needed services
             services.AddSingleton<IPasswordHasher, PasswordHasher>();

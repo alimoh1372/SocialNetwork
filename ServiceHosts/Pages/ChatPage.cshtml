@@ -30,16 +30,14 @@
             <div class="main-box clearfix">
                 <div class="profile-header">
                     <h3><span>User info</span></h3>
-                    <a asp-page="/EditProfilePicture" asp-route-id="@Model.UserInfo.Id" class="btn btn-primary edit-profile">
+                    <a asp-page="./EditProfilePicture" asp-route-id="@Model.UserInfo.Id" class="btn btn-primary edit-profile">
                         <i class="fa fa-pencil-square fa-lg"></i> Edit profile Picture
                     </a>
                     <a id="btnRefresh" asp-page="/ChatPage" class="btn btn-info pull-right">
                         <i class="fa fa-refresh fa-lg"> </i> Refresh page
                     </a>
                 </div>
-                <!--Start User Info Center panel for user detail -->
-                @*<input type="hidden" id="UserId" value="@Model.UserInfo.Id" />
-                <input type="hidden" id="UserName" value="@Model.UserInfo.Email" />*@
+
                 <div id="UserInfoCenterDiv" class="row profile-user-info">
                     <div class="col-sm-8">
 
@@ -205,7 +203,7 @@
                                 {
                                     <li data-friendUserId="@userFriend.UserId" class="col-md-4">
                                         <div class="img">
-                                            <img src="~/Images/DefaultProfile.png"
+                                            <img src="@userFriend.ProfilePicture"
                                                  class="img-responsive"
                                                  alt="Profile picture"
                                                  title="ProfilePicture" />

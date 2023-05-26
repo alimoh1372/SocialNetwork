@@ -114,9 +114,9 @@ namespace ServiceHosts.Hubs
 
             if (result.IsSuccedded)
             {
-
+                var editedMessage =await _messageApplication.GetMessageViewModelBy(id);
                 //Send the response to the clients ui
-                var jsonMessage = JsonSerializer.Serialize(message);
+                var jsonMessage = JsonSerializer.Serialize(editedMessage);
                 await Clients.Users(message.FkFromUserId.ToString(), message.FkToUserId.ToString())
                     .SendAsync("EditMessage", message);
 

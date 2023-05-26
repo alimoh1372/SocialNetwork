@@ -25,7 +25,6 @@ namespace ServiceHosts.Pages
         public void OnGet(long id)
         {
             EditProfilePicture = _userApplication.GetEditProfileDetails(id).Result;
-
         }
 
         public async Task<IActionResult> OnPost(EditProfilePicture command)

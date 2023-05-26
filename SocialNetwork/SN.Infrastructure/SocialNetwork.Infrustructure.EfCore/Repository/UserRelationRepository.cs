@@ -32,6 +32,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     UserId = x.Id,
                     Name = x.Name,
                     LastName = x.LastName,
+                    ProfilePicture = x.ProfilePicture
                     
                 }).AsNoTracking()
                 .ToListAsync();

@@ -23,7 +23,7 @@ namespace SocialNetwork.Infrastructure.Configuration
         /// </summary>
         /// <param name="services"></param>
 
-        public static void Configure(IServiceCollection services)
+        public static void Configure(IServiceCollection services,string connectionString)
         {
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<IUserApplication, UserApplication>();
@@ -38,8 +38,9 @@ namespace SocialNetwork.Infrastructure.Configuration
             services.AddTransient<IUserQuery, UserQuery>();
             services.AddTransient<IUserRelationQuery, UserRelationQuery>();
             services.AddTransient<IMessageQuery, MessageQuery>();
-            services.AddDbContext<SocialNetworkContext>(x =>
-                x.UseInMemoryDatabase("SocialNetworkDb"));
+          services.AddDbContext<SocialNetworkContext>(x => x.UseSqlServer(connectionString));
+          //  services.AddDbContext<SocialNetworkContext>(x =>
+            //    x.UseInMemoryDatabase("SocialNetworkDb"));
         }
     }
 }

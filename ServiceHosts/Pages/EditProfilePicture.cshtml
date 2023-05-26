@@ -3,14 +3,14 @@
 @{
     ViewData["Title"] = "Edit profile picture";
 }
-@if (!string.IsNullOrWhiteSpace(Model.Message))
+@*@if (Model.Message != null)
 {
     <div class="row">
         <div class="col-md-12 error" >
             @Model.Message
         </div>
     </div>
-}
+}*@
 
 <form method="post"
       enctype="multipart/form-data">

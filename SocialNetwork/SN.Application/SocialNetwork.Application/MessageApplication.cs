@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using _00_Framework.Application;
+using Microsoft.VisualBasic;
 using SocialNetwork.Application.Contracts.MessageContracts;
 using SocialNetwork.Domain.MessageAgg;
 
@@ -50,6 +51,7 @@ namespace SocialNetwork.Application
             if (message.CreationDate.AddMinutes(+3) < DateTime.Now)
                 return operationResult.Failed(ApplicationMessage.EditTimeOver);
             message.Edit(command.MessageContent);
+            _messageRepository.SaveChanges();
             return operationResult.Succedded();
 
         }
@@ -84,6 +86,11 @@ namespace SocialNetwork.Application
         public async Task<EditMessage> GetEditMessageBy(long id)
         {
             return await _messageRepository.GetEditMessage(id);
+        }
+
+        public async Task<MessageViewModel> GetMessageViewModelBy(long id)
+        {
+            return await _messageRepository.GetMessageViewModeGetViewModelBy(id);
         }
     }
 }

@@ -19,6 +19,11 @@ namespace SocialNetwork.Application.Contracts.MessageContracts
         public string ReceiverFullName { get; set; }
        
         public string MessageContent { get; set; }
+
+        public string FromUserProfilePicture { get; set; }
+
+        public string ToUserProfilePicture { get; set; }
+        //TODO:Add FromUser Image and
         //TODO:Implementing Like And ReadMessage operation
     }
 }
