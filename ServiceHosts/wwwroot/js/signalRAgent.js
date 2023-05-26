@@ -375,6 +375,7 @@ function SwitchTabTo(liHrefAtt) {
 //on user page that request sent to it 
 //Give the user id that request create by it
 function updateRequestRowAddAcceptButton(userIdRequestSentFromIt) {
+    //TODO:Adding message to the requestRevert
     const rows = document.querySelectorAll('tr[data-userid]');
     for (var i = 0; i < rows.length; i++) {
         let useridAtt = rows[i].getAttribute('data-userid');
@@ -399,6 +400,7 @@ function updateRequestRowAddAcceptButton(userIdRequestSentFromIt) {
 
 //Update current user row after send relation request on request sended to it
 function updateRequestRowAddPendingToIt(userIdRequestFromIt) {
+    //TODO:Update this row to new form
     const rows = document.querySelectorAll('tr[data-userid]')
     //let rows = document.querySelectorAll("tr[data-userid]");
     for (var i = 0; i < rows.length; i++) {
@@ -419,9 +421,9 @@ function AlertError(message) {
 }
 
 //InvokeSend Request from current user to the user Request Send To It
-function sendRequestOfRelationShip(currentUserId, userRequestSendToIt) {
+function sendRequestOfRelationShip(currentUserId, userRequestSendToIt,requestMessage) {
 
-    chatConnection.invoke('SendUserRelationRequest', currentUserId, userRequestSendToIt);
+    chatConnection.invoke('SendUserRelationRequest', currentUserId, userRequestSendToIt,requestMessage);
 
 }
 

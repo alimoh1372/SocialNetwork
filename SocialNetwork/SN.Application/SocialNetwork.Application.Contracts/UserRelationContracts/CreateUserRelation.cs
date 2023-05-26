@@ -16,6 +16,10 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         [DisplayName("Request To User B")]
         [Range(1, long.MaxValue)]
         public long FkUserBId { get;  set; }
+        [DisplayName("Request message")]
+        [Required]
+        [StringLength(100)]
+        public string RelationRequestMessage { get;  set; }
 
     }
 }

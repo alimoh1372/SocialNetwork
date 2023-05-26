@@ -24,7 +24,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
         public async Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId)
         {
             //Get all user expect current user
-            var query =await _context.Users.Include(x => x.UserARelations)
+            var query = await _context.Users.Include(x => x.UserARelations)
                 .Include(x => x.UserBRelations)
                 .Where(x => x.Id != currentUserId)
                 .Select(x => new UserWithRequestStatusVieModel
@@ -33,18 +33,38 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     Name = x.Name,
                     LastName = x.LastName,
                     ProfilePicture = x.ProfilePicture
-                    
+
                 }).AsNoTracking()
                 .ToListAsync();
-            
+
             //Fill request status property
             foreach (UserWithRequestStatusVieModel userWithRequestStatusVieModel in query)
             {
-                userWithRequestStatusVieModel.RequestStatusNumber =await CheckStatusOfRequest(currentUserId,
+                userWithRequestStatusVieModel.RequestStatusNumber = await CheckStatusOfRequest(currentUserId,
                     userWithRequestStatusVieModel.UserId);
+
+                //Get the request Message
+                if (userWithRequestStatusVieModel.RequestStatusNumber == RequestStatus.RequestPending ||
+                    userWithRequestStatusVieModel.RequestStatusNumber == RequestStatus.RevertRequestPending)
+                {
+                    userWithRequestStatusVieModel.RelationRequestMessage =
+                        await GetRequestMessage(currentUserId, userWithRequestStatusVieModel.UserId);
+                }
             }
-           
-            return  query;
+
+            return query;
+        }
+
+        private async Task<string> GetRequestMessage(long userIdA, long userIdB)
+        {
+            //get relation between a to b or inversion of it
+            var userRelation = await _context.UserRelations.
+                Where(x => (x.FkUserAId == userIdA && x.FkUserBId == userIdB)
+                           || (x.FkUserAId == userIdB && x.FkUserBId == userIdA))
+                .FirstOrDefaultAsync();
+            if (userRelation == null)
+                return "Relation not found";
+            return userRelation.RelationRequestMessage;
         }
 
         public async Task<UserRelation> GetRelationBy(long userIdRequestSentFromIt, long userIdRequestSentToIt)
@@ -56,7 +76,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
         private async Task<RequestStatus> CheckStatusOfRequest(long userIdA, long userIdB)
         {
             //get relation between a to b or inversion of it
-            var userRelations =await _context.UserRelations.
+            var userRelations = await _context.UserRelations.
                 Where(x => (x.FkUserAId == userIdA && x.FkUserBId == userIdB)
                                  || (x.FkUserAId == userIdB && x.FkUserBId == userIdA))
                                  .ToListAsync();

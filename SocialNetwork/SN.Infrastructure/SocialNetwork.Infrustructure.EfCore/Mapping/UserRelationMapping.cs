@@ -13,7 +13,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Mapping
             builder.ToTable("UserRelations");
             //Specify the primary key
             builder.HasKey(x => x.Id);
-
+            builder.Property(x => x.RelationRequestMessage).HasMaxLength(100);
             
 
             //define property mapping

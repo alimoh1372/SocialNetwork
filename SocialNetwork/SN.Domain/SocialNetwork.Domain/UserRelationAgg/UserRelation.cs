@@ -14,21 +14,24 @@ namespace SocialNetwork.Domain.UserRelationAgg
         public long FkUserBId { get; private set; }
         public User UserB { get; private set; }
 
-
+        public string RelationRequestMessage { get; private set; }
         public bool Approve { get; private set; }
 
         #region UserMethods
+
         /// <summary>
         /// Make the Request of relation from User A To User B
         /// </summary>
         /// <param name="fkUserAId">Id of user A</param>
         /// <param name="fkUserBId">Id of user B</param>
-        public UserRelation(long fkUserAId, long fkUserBId)
+        /// <param name="relationRequestMessage">A message to show user that must be accept request</param>
+        public UserRelation(long fkUserAId, long fkUserBId, string relationRequestMessage)
         {
             if (fkUserAId == fkUserBId)
                 return;
             FkUserAId = fkUserAId;
             FkUserBId = fkUserBId;
+            RelationRequestMessage = relationRequestMessage;
             Approve = false;
         }
 

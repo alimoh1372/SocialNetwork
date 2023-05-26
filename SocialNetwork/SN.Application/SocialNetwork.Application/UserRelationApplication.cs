@@ -27,7 +27,7 @@ namespace SocialNetwork.Application
                 return result.Failed(ApplicationMessage.Duplication);
 
             //create user relation instance
-            UserRelation friendShipRequest = new UserRelation(command.FkUserAId, command.FkUserBId);
+            UserRelation friendShipRequest = new UserRelation(command.FkUserAId, command.FkUserBId,command.RelationRequestMessage);
 
             //Add to database
             _userRelationRepository.Create(friendShipRequest);

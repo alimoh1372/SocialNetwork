@@ -19,5 +19,6 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         public RequestStatus RequestStatusNumber { get; set; }
         public DateTimeOffset TimeOffset { get; set; }
         public string ProfilePicture { get; set; }
+        public string RelationRequestMessage { get; set; }
     }
 }
