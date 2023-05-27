@@ -94,7 +94,12 @@ namespace ServiceHosts.Hubs
                 await Clients.Caller.SendAsync("ShowError", result.Message);
             }
         }
-
+        /// <summary>
+        /// Edit the message with id=<paramref name="id"/> and new message=<paramref name="messageContext"/>
+        /// </summary>
+        /// <param name="id">message id</param>
+        /// <param name="messageContext">message content change to it</param>
+        /// <returns></returns>
         public async Task EditMessage(long id, string messageContext)
         {
             //Get the edit model of message

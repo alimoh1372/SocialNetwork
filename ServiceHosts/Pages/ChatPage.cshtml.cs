@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 using _01_SocialNetworkQuery.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -39,6 +40,13 @@ namespace ServiceHosts.Pages
         {
             var result= await _messageQuery.LoadChatHistory(currentUserId, activeUserToChat);
             return new JsonResult(result);
+        }
+
+        public async Task<JsonResult> OnGetFriendsOfUser(long userId)
+        {
+            var result = await _userRelationQuery.GetFriendsOfUser(userId);
+            var jsonString = JsonSerializer.Serialize(result);
+            return new JsonResult(jsonString);
         }
     }
 }

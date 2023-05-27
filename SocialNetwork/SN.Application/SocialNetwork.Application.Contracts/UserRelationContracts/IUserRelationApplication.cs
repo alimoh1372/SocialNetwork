@@ -34,5 +34,7 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         /// <param name="userIdRequestSentToIt">User id that request sent to it</param>
         /// <returns></returns>
         Task<OperationResult> Accept(long userIdRequestSentFromIt, long userIdRequestSentToIt);
+
+        Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId);
     }
 }

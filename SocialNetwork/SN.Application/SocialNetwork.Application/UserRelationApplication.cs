@@ -86,5 +86,10 @@ namespace SocialNetwork.Application
             _userRelationRepository.SaveChanges();
             return result.Succedded();
         }
+
+        public async Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId)
+        {
+            return await _userRelationRepository.GetFriendsOfUser(userId);
+        }
     }
 }

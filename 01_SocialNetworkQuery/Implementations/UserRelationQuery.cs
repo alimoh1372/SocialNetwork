@@ -18,5 +18,10 @@ namespace _01_SocialNetworkQuery.Implementations
         {
             return await _userRelationApplication.GetAllUserWithRequestStatus(currentUserId);
         }
+
+        public async Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId)
+        {
+            return await _userRelationApplication.GetFriendsOfUser(userId);
+        }
     }
 }

@@ -12,5 +12,6 @@ namespace SocialNetwork.Domain.UserRelationAgg
     {
         Task<List<UserWithRequestStatusVieModel>> GetAllUserWithRequestStatus(long currentUserId);
         Task<UserRelation> GetRelationBy(long userIdRequestSentFromIt, long userIdRequestSentToIt);
+        Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId);
     }
 }

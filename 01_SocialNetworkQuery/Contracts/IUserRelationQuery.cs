@@ -12,5 +12,8 @@ namespace _01_SocialNetworkQuery.Contracts
         /// <param name="currentUserId"></param>
         /// <returns></returns>
         Task<List<UserWithRequestStatusVieModel>> GetAllUsersWithRelationStatusAsync(long currentUserId);
+
+
+        Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId);
     }
 }

@@ -73,6 +73,27 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                 x.FkUserAId == userIdRequestSentFromIt && x.FkUserBId == userIdRequestSentToIt);
         }
 
+        public async Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId)
+        {
+            return  await _context.UserRelations
+                .Include(x => x.UserA)
+                .Include(x => x.UserB)
+                //Filter All relation that accepted and user with id=userId participate in it
+                .Where(x => (x.UserA.Id == userId || x.UserB.Id == userId) && x.Approve)
+                .Select(x => new UserWithRequestStatusVieModel
+                {
+                    //Set the userWith relation status to show the other users that friend with him and show other users in relation info
+                    UserId = x.FkUserAId == userId ? x.FkUserBId : x.FkUserAId,
+                    Name = x.FkUserAId == userId ? x.UserB.Name : x.UserA.Name,
+                    LastName = x.FkUserAId == userId ? x.UserB.LastName : x.UserA.LastName,
+                    //show that this user(otherUser) is requested the relation or not
+                    RequestStatusNumber = x.FkUserAId == userId ? RequestStatus.RequestAccepted : RequestStatus.RevertRequestAccepted,
+                    TimeOffset = x.CreationDate,
+                    ProfilePicture = x.FkUserAId == userId ? x.UserB.ProfilePicture : x.UserA.ProfilePicture,
+                })
+                .ToListAsync();
+        }
+
         private async Task<RequestStatus> CheckStatusOfRequest(long userIdA, long userIdB)
         {
             //get relation between a to b or inversion of it
