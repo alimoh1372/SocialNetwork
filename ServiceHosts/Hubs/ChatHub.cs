@@ -25,19 +25,20 @@ namespace ServiceHosts.Hubs
             _messageApplication = messageApplication;
         }
 
-        public async void SendUserRelationRequest(long currentUserId, long requestSendToId)
+        public async void SendUserRelationRequest(long currentUserId, long requestSendToId,string relationMessage)
         {
             CreateUserRelation relation = new CreateUserRelation
             {
                 FkUserAId = currentUserId,
-                FkUserBId = requestSendToId
+                FkUserBId = requestSendToId,
+                RelationRequestMessage = relationMessage
             };
             var result = _userRelationApplication.Create(relation);
             if (result.IsSuccedded)
             {
                 try
                 {
-                    await Clients.User(requestSendToId.ToString()).SendAsync("updateRequestRowAddAcceptButton", currentUserId);
+                    await Clients.User(requestSendToId.ToString()).SendAsync("updateRequestRowAddAcceptButton", currentUserId,relationMessage);
                     await Clients.Caller.SendAsync("updateRequestRowAddPending", requestSendToId);
                     return;
                 }

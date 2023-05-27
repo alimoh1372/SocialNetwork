@@ -374,7 +374,7 @@ function SwitchTabTo(liHrefAtt) {
 //Update All user table after request sent and be done successfully 
 //on user page that request sent to it 
 //Give the user id that request create by it
-function updateRequestRowAddAcceptButton(userIdRequestSentFromIt) {
+function updateRequestRowAddAcceptButton(userIdRequestSentFromIt,relationMessage) {
     //TODO:Adding message to the requestRevert
     const rows = document.querySelectorAll('tr[data-userid]');
     for (var i = 0; i < rows.length; i++) {
@@ -382,7 +382,9 @@ function updateRequestRowAddAcceptButton(userIdRequestSentFromIt) {
         if (useridAtt != '' && Number(useridAtt) === userIdRequestSentFromIt) {
             currentTableRowInAllUsersWorkOnIt = rows[i];
             let tds = rows[i].getElementsByTagName('td');
-            tds[2].innerHTML = "Requested relation to you";
+           
+            let requestMessage = relationMessage;
+            tds[2].innerHTML = "Request Message:"+requestMessage;
             tds[3].innerHTML = '<i class="text-warning fa fa-question-circle"></i> <span class="label label-warning">Request Came</span>';
             tds[4].innerHTML = '<td><a class="btn btn-success" data-acceptRequest=' + userIdRequestSentFromIt + '" href="">Accept</a></td>';
             let acceptButton = tds[4].querySelector('a[data-acceptRequest]');
@@ -407,8 +409,15 @@ function updateRequestRowAddPendingToIt(userIdRequestFromIt) {
         let useridAtt = rows[i].getAttribute('data-userid');
         if (useridAtt != '' && Number(useridAtt) === userIdRequestFromIt) {
             currentTableRowInAllUsersWorkOnIt = rows[i];
+
             let tds = rows[i].getElementsByTagName('td');
-            tds[2].innerHTML = "You Sent Request";
+            let requestInput = tds[2].querySelector('input[type="text"]');
+            if (!requestInput && requestInput.length != 1) {
+                AlertError("request inpute not found...Please call administrator");
+                return;
+            }
+            let requestMessage = requestInput.value;
+            tds[2].innerHTML = "YourMessage:"+requestMessage;
             tds[3].innerHTML = 'Request <span class="lable lable-warning">Pending...</span>';
             tds[4].innerHTML = '';
             break;
@@ -509,11 +518,22 @@ function ready() {
     requestAnchors.forEach((item) => {
         item.addEventListener('click', function (e) {
             e.preventDefault();
+            
             var userRequestSendToIt = Number(e.target.getAttribute('data-requestedUserId'));
-
+            
             if (currentUserId == 0)
                 currentUserId = getCurrentUserId();
-            sendRequestOfRelationShip(currentUserId, userRequestSendToIt);
+            var trElRequestRelationRow = document.querySelector('tr[data-userid="' + userRequestSendToIt + '"]');
+            if (!trElRequestRelationRow && trElRequestRelationRow.length!=1) {
+                AlertError("Cant find the tr of user:" + userRequestSendToIt + "please call administrator");
+                return;
+            }
+            //Get the message value
+            let inputEl = trElRequestRelationRow.querySelector('input[type="text"]');
+            let relationMessageValue = inputEl.value;
+
+
+            sendRequestOfRelationShip(currentUserId, userRequestSendToIt, relationMessageValue);
         });
     });
     //AddEventListener to all request revert pending to handle accept button operation
