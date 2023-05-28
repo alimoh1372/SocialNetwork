@@ -12,7 +12,11 @@ namespace _01_SocialNetworkQuery.Contracts
         /// <param name="currentUserId"></param>
         /// <returns></returns>
         Task<List<UserWithRequestStatusVieModel>> GetAllUsersWithRelationStatusAsync(long currentUserId);
-
+        /// <summary>
+        /// Get All friend of user with id<paramref name="userId"/>
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns><see langworf="null"/> if user haven't any friend</returns>
 
         Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId);
     }

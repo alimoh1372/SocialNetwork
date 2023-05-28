@@ -10,7 +10,8 @@ var roomListEl = document.getElementById('roomList');
 var chatHistoryDiv = document.getElementById('chatHistory');
 var activeUserIdToChat = 0;
 var currentTableRowInAllUsersWorkOnIt;
-
+var tableFriendOfFriends;
+var tbodyFriendsOfFriend;
 
 //Initial chatHubConnection
 var chatConnection = new signalR.HubConnectionBuilder()
@@ -402,7 +403,7 @@ function updateRequestRowAddAcceptButton(userIdRequestSentFromIt,relationMessage
 
 //Update current user row after send relation request on request sended to it
 function updateRequestRowAddPendingToIt(userIdRequestFromIt) {
-    //TODO:Update this row to new form
+   
     const rows = document.querySelectorAll('tr[data-userid]')
     //let rows = document.querySelectorAll("tr[data-userid]");
     for (var i = 0; i < rows.length; i++) {
@@ -468,6 +469,53 @@ function filterUsersBy(name) {
     }
 
 }
+//Add the friends of friend to its tab
+
+function appendFriendsOfFriend(userFriends) {
+    let friends = JSON.parse(userFriends);
+    for (var i = 0; i < friends.length; i++) {
+        let currentFriend = friends[i];
+        appendFriendOfFriend(currentFriend);
+    }
+}
+
+
+
+//Append a friend to list of friend in tab friend of friends
+function appendFriendOfFriend(currentFriend) {
+    let tableRow = document.createElement('tr');
+    tableRow.appendChild(createTableData(currentFriend.UserId));
+    tableRow.appendChild(createTableData(currentFriend.Name + " " + currentFriend.LastName));
+    tbodyFriendsOfFriend.appendChild(tableRow);
+}
+function createTableData(text) {
+    let td = document.createElement('td');
+    td.textContent = text;
+    return td;
+}
+//Create a td element with given textContent
+
+
+//Get All friends of a friend and return the json string 
+function getAllFriendsOf(userId) {
+
+    $.ajax({
+        type: "GET",
+        url: "/ChatPage?handler=FriendsOfUser",
+        data: {
+            "userId": userId
+        },
+        success: function (response) {
+            appendFriendsOfFriend(response);
+        },
+        failure: function (response) {
+            alert(response.responseText);
+        },
+        error: function (response) {
+            alert(response.responseText);
+        }
+    });
+}
 
 
 //Doing on content loaded operations start hub connection get needed element and add eventlistener to some
@@ -480,6 +528,21 @@ function ready() {
     currentUserId = getCurrentUserId();
     TableAllUsers = document.getElementById('TableAllUsers');
     inputSearchAllUsers = document.getElementById('searchAllUsers');
+    tableFriendOfFriends = document.getElementById('tableFriendsOfFriend');
+    tbodyFriendsOfFriend = tableFriendOfFriends.querySelector('tbody');
+    let anchorsFriendsOfFriend = ulFriendsEl.querySelectorAll('a[data-FriendsOfFriend]');
+    for (var i = 0; i < anchorsFriendsOfFriend.length; i++) {
+        let friendUserId = anchorsFriendsOfFriend[i].getAttribute('data-FriendsOfFriend');
+        if (!friendUserId)
+            return;
+        anchorsFriendsOfFriend[i].addEventListener('click',
+            (e) => {
+                e.preventDefault();
+                removeAllChildren(tbodyFriendsOfFriend);
+                SwitchTabTo("#tab-FriendsOfFriend");
+                getAllFriendsOf(friendUserId);
+            });
+    }
 
     //Event listener to filter users when changed
     inputSearchAllUsers.addEventListener('input', (e) => {

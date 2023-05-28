@@ -71,6 +71,7 @@
                         </li>
                         <li><a href="#tab-friends" data-toggle="tab">Friends</a></li>
                         <li><a href="#tab-chat" data-toggle="tab">Chat</a></li>
+                        <li><a href="#tab-FriendsOfFriend" data-toggle="tab">FriendsOfFriend</a></li>
                     </ul>
 
                     <div class="tab-content">
@@ -120,7 +121,7 @@
                                                         @userWithRequest.Name &nbsp; @userWithRequest.LastName
                                                     </td>
                                                     <td>
-                                                        <input  type="text" placeholder="Enter your message to request..."/>
+                                                        <input type="text" placeholder="Enter your message to request..." />
                                                     </td>
                                                     <td>
                                                         without <span class="lable lable-info">Request</span>
@@ -198,8 +199,8 @@
                         <div class="tab-pane fade" id="tab-friends">
                             <ul id="UlFriends" class="widget-users row">
                                 @foreach (var userFriend in
-                                  Model.UserWithRequests.Where(x => x.RequestStatusNumber == RequestStatus.RequestAccepted
-                                                                    || x.RequestStatusNumber == RequestStatus.RevertRequestAccepted))
+                               Model.UserWithRequests.Where(x => x.RequestStatusNumber == RequestStatus.RequestAccepted
+                                                                 || x.RequestStatusNumber == RequestStatus.RevertRequestAccepted))
                                 {
                                     <li data-friendUserId="@userFriend.UserId" class="col-md-4">
                                         <div class="img">
@@ -214,6 +215,9 @@
                                             </div>
                                             <div class="type">
                                                 <a data-sendMessage="@userFriend.UserId" class="btn btn-success"><i class='fa fa-send' style='color: #9400d3'></i> Send Message</a>
+                                            </div>
+                                            <div class="type">
+                                                <a data-FriendsOfFriend="@userFriend.UserId" class="btn btn-primary"><i class='fa fa-users' style='color: #40e0d0'></i> Show friends</a>
                                             </div>
                                         </div>
                                     </li>
@@ -230,7 +234,7 @@
                                          style="position: relative; overflow: auto; width: auto; height: 340px;">
                                         <div id="chatHistory" class="conversation-inner"
                                              style="overflow: visible; width: auto; height: 340px">
-                                           
+
                                         </div>
                                         <div class="slimScrollBar"
                                              style="width: 7px; position: absolute; top: 0px; opacity: 0.4; display: block; border-radius: 7px; z-index: 99; right: 1px; background: rgb(0, 0, 0);"></div>
@@ -260,6 +264,23 @@
                             </div>
                         </div>
                         <!--End Tab Chat -->
+                        <!--Start Tab Chat -->
+                        <div class="tab-pane fade" id="tab-FriendsOfFriend">
+                            <div class="table-responsive">
+                                <table id="tableFriendsOfFriend" class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>User Id</th>
+                                            <th>User Name</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <!--End Tab FriendsOfFriend -->
                     </div>
                 </div>
             </div>
