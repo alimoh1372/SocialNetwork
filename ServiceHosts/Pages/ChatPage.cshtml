@@ -202,7 +202,7 @@
                                Model.UserWithRequests.Where(x => x.RequestStatusNumber == RequestStatus.RequestAccepted
                                                                  || x.RequestStatusNumber == RequestStatus.RevertRequestAccepted))
                                 {
-                                    <li data-friendUserId="@userFriend.UserId" class="col-md-4">
+                                    <li data-friendUserId="@userFriend.UserId" class="col-md-6">
                                         <div class="img">
                                             <img src="@userFriend.ProfilePicture"
                                                  class="img-responsive"
@@ -211,16 +211,14 @@
                                         </div>
                                         <div class="details">
                                             <div class="name row">
-                                                <span class="col-md-3">@userFriend.Name &nbsp; @userFriend.LastName</span>
-                                                <span class="col-md-2"></span>
-                                                <span class="col-md-1"></span>
+                                                <span class="col-md-8">@userFriend.Name &nbsp; @userFriend.LastName</span>
+                                                <span class="col-md-4">Mutual Friend:@userFriend.MutualFriendNumber</span>
                                             </div>
                                             <div class="type row">
-
-                                                <a data-sendMessage="@userFriend.UserId" class="btn btn-success col-md-1"><i class='fa fa-send' style='color: #9400d3'></i> Send Message</a>
-                                                <a data-FriendsOfFriend="@userFriend.UserId" class="btn btn-primary col-md-1"><i class='fa fa-users' style='color: #40e0d0'></i> Show friends</a>
+                                                <a data-sendMessage="@userFriend.UserId" class="btn btn-success"><i class='fa fa-send' style='color: #9400d3'></i> Send Message</a>
+                                                <a data-FriendsOfFriend="@userFriend.UserId" class="btn btn-primary"><i class='fa fa-users' style='color: #40e0d0'></i> Show friends</a>
                                             </div>
-                                            
+
                                         </div>
                                     </li>
                                 }

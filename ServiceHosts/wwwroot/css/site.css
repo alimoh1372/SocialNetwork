@@ -590,7 +590,6 @@ a {
     .widget-users li {
         border-bottom: 1px solid #ebebeb;
         padding: 15px 0;
-        height: 96px;
     }
 
         .widget-users li > .img {
@@ -612,6 +611,7 @@ a {
 
                 .widget-users li > .details > .name > a {
                     color: #344644;
+                    margin-right: 2px;
                 }
 
                     .widget-users li > .details > .name > a:hover {

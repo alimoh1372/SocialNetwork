@@ -20,5 +20,6 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         public DateTimeOffset TimeOffset { get; set; }
         public string ProfilePicture { get; set; }
         public string RelationRequestMessage { get; set; }
+        public int MutualFriendNumber { get; set; }
     }
 }
