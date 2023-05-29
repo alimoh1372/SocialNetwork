@@ -210,15 +210,17 @@
                                                  title="ProfilePicture" />
                                         </div>
                                         <div class="details">
-                                            <div class="name">
-                                                <span>@userFriend.Name &nbsp; @userFriend.LastName</span>
+                                            <div class="name row">
+                                                <span class="col-md-3">@userFriend.Name &nbsp; @userFriend.LastName</span>
+                                                <span class="col-md-2"></span>
+                                                <span class="col-md-1"></span>
                                             </div>
-                                            <div class="type">
-                                                <a data-sendMessage="@userFriend.UserId" class="btn btn-success"><i class='fa fa-send' style='color: #9400d3'></i> Send Message</a>
+                                            <div class="type row">
+
+                                                <a data-sendMessage="@userFriend.UserId" class="btn btn-success col-md-1"><i class='fa fa-send' style='color: #9400d3'></i> Send Message</a>
+                                                <a data-FriendsOfFriend="@userFriend.UserId" class="btn btn-primary col-md-1"><i class='fa fa-users' style='color: #40e0d0'></i> Show friends</a>
                                             </div>
-                                            <div class="type">
-                                                <a data-FriendsOfFriend="@userFriend.UserId" class="btn btn-primary"><i class='fa fa-users' style='color: #40e0d0'></i> Show friends</a>
-                                            </div>
+                                            
                                         </div>
                                     </li>
                                 }
