@@ -36,5 +36,6 @@ namespace SocialNetwork.Application.Contracts.UserRelationContracts
         Task<OperationResult> Accept(long userIdRequestSentFromIt, long userIdRequestSentToIt);
 
         Task<List<UserWithRequestStatusVieModel>> GetFriendsOfUser(long userId);
+        Task<int> GetNumberOfMutualFriend(long currentUserId, long friendUserId);
     }
 }

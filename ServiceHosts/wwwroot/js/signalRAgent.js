@@ -12,6 +12,7 @@ var activeUserIdToChat = 0;
 var currentTableRowInAllUsersWorkOnIt;
 var tableFriendOfFriends;
 var tbodyFriendsOfFriend;
+var mutualfriendNumber = 0;
 
 //Initial chatHubConnection
 var chatConnection = new signalR.HubConnectionBuilder()
@@ -93,7 +94,7 @@ function addNewMessageToChatHistoryUlEl(message) {
 }
 //Handle the   handleAfterAcceptedRequest 
 
-function handleAfterAcceptedRequest(userIdReuestSentFromIt, userIdRequestAcceptByIt) {
+function handleAfterAcceptedRequest(userIdReuestSentFromIt, userIdRequestAcceptByIt,countMutualFriend) {
     //check if currentTableRowInAllUsersWorkOnIt isn't null or more than one
     //if it is so set currentTableRowInAllUsersWorkOnIt
     if (!(currentTableRowInAllUsersWorkOnIt && currentTableRowInAllUsersWorkOnIt.length == 1)) {
@@ -109,7 +110,8 @@ function handleAfterAcceptedRequest(userIdReuestSentFromIt, userIdRequestAcceptB
             }
         }
     }
-    ChangeTheStatusToFriend(currentTableRowInAllUsersWorkOnIt);
+    mutualfriendNumber = countMutualFriend;
+    ChangeTheStatusToFriend(currentTableRowInAllUsersWorkOnIt, countMutualFriend);
 }
 
 //Change the status of row to the accepted and its styles
@@ -133,9 +135,9 @@ function ChangeTheStatusToFriend(_currentTableRowInAllUsersWorkOnIt) {
 //method Add new friend on friend tab that on page load functionaly add accepted users to the friend tab
 
 function AddNewItemToFriends(_name, _userId) {
-
+    
     let newFiriendLiEl = document.createElement('li');
-    newFiriendLiEl.classList.add("col-md-3");
+    newFiriendLiEl.classList.add("col-md-6");
     newFiriendLiEl.setAttribute('data-friendUserId', _userId);
     var div = document.createElement('div');
     div.classList.add('img');
@@ -146,8 +148,8 @@ function AddNewItemToFriends(_name, _userId) {
     image.src = "/Images/DefaultProfile.png";
     div.appendChild(image);
     newFiriendLiEl.appendChild(div);
-    var html = newFiriendLiEl.innerHTML + '<div class="details"><div class="name"><span>' + _name + '</span></div></div>' +
-        '<div class="type"><a data-sendMessage=' + _userId + ' class="btn btn-success" > <i class="fa fa-send" style="color: #9400d3"></i> Send Message</a ></div>';
+    var html = newFiriendLiEl.innerHTML + '<div class="details"><div class="name row"><span class="col-md-8">' + _name + '</span><span class="col-md-4">Mutual Friend:'+mutualfriendNumber+'</span></div></div>' +
+        '<div class="type row"><a data-sendMessage=' + _userId + ' class="btn btn-success" > <i class="fa fa-send" style="color: #9400d3"></i> Send Message</a ><a data-FriendsOfFriend="'+_userId+'" class="btn btn-primary"><i class="fa fa-users" style="color: #40e0d0"></i> Show friends</a></div>';
     newFiriendLiEl.innerHTML = html;
 
 
@@ -158,10 +160,26 @@ function AddNewItemToFriends(_name, _userId) {
 
     //Add eventListener to the tab button
     addEventListenerToFriendLiElMessageButton(newFiriendLiEl);
+    //Add eventListener to the Show friend button 
+    addEventListenerToFriendLiElShowFriendButton(newFiriendLiEl);
+    
 }
 
 
-
+// Add eventListener to the Show friend button in friend Li
+function addEventListenerToFriendLiElShowFriendButton(friendEl) {
+    let anchorFriendsOfFriend = friendEl.querySelector('a[data-FriendsOfFriend]');
+    let friendUserId = anchorFriendsOfFriend.getAttribute('data-FriendsOfFriend');
+        if (!friendUserId)
+            return;
+    anchorFriendsOfFriend.addEventListener('click',
+            (e) => {
+                e.preventDefault();
+                removeAllChildren(tbodyFriendsOfFriend);
+                SwitchTabTo("#tab-FriendsOfFriend");
+                getAllFriendsOf(friendUserId);
+            });
+}
 
 
 
@@ -516,7 +534,6 @@ function getAllFriendsOf(userId) {
         }
     });
 }
-
 
 //Doing on content loaded operations start hub connection get needed element and add eventlistener to some
 function ready() {

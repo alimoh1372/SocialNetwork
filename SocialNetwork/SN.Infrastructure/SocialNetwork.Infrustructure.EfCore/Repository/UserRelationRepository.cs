@@ -55,7 +55,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     userWithRequestStatusVieModel.RequestStatusNumber == RequestStatus.RevertRequestAccepted)
                 {
                     userWithRequestStatusVieModel.MutualFriendNumber =
-                        await SetMutualFriendNumber(currentUserId, userWithRequestStatusVieModel.UserId);
+                        await GetMutualFriendNumber(currentUserId, userWithRequestStatusVieModel.UserId);
                 }
             }
 
@@ -63,12 +63,12 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
         }
 
         //Find number of mutual friend
-        private async Task<int> SetMutualFriendNumber(long currentUserId, long userId)
+        public async Task<int> GetMutualFriendNumber(long currentUserId, long friendUserId)
         {
             #region Way1Ofsolve this
 
-            ////Get a list of friendShip of friend with user id userId
-            //var listOfUserIdFriendShip = await _context.UserRelations.Where(x => x.Approve && (x.FkUserAId == userId || x.FkUserBId == userId))
+            ////Get a list of friendShip of friend with user id friendUserId
+            //var listOfUserIdFriendShip = await _context.UserRelations.Where(x => x.Approve && (x.FkUserAId == friendUserId || x.FkUserBId == friendUserId))
             //    .ToListAsync();
 
             ////Get a list of friendShip of current User
@@ -80,7 +80,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
             //Parallel.ForEach(listOfUserIdFriendShip, (userRelation) =>
             //{
             //    //Find the friend of a friend id to check it is also friend with current user?
-            //    var otherFriendId = userRelation.FkUserAId == userId ? userRelation.FkUserBId : userRelation.FkUserAId;
+            //    var otherFriendId = userRelation.FkUserAId == friendUserId ? userRelation.FkUserBId : userRelation.FkUserAId;
 
 
             //    //Check There is any relation between current user and other friend of current user's friend
@@ -107,10 +107,10 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
                     Id = x.FkUserAId==currentUserId?x.FkUserBId:x.FkUserAId
                 });
             var userIdFriendsIs = _context.UserRelations.Where(x =>
-                    x.Approve && (userId == x.FkUserAId || userId == x.FkUserBId))
+                    x.Approve && (friendUserId == x.FkUserAId || friendUserId == x.FkUserBId))
                 .Select(x => new
                 {
-                    Id = x.FkUserAId == userId ? x.FkUserBId : x.FkUserAId
+                    Id = x.FkUserAId == friendUserId ? x.FkUserBId : x.FkUserAId
                 });
             //Find Count of common id in two list
             var countMutualFriend =await currentUserFriendsId.Intersect(userIdFriendsIs).CountAsync();
@@ -143,7 +143,7 @@ namespace SocialNetwork.Infrastructure.EfCore.Repository
             return await _context.UserRelations
                 .Include(x => x.UserA)
                 .Include(x => x.UserB)
-                //Filter All relation that accepted and user with id=userId participate in it
+                //Filter All relation that accepted and user with id=friendUserId participate in it
                 .Where(x => (x.UserA.Id == userId || x.UserB.Id == userId) && x.Approve)
                 .Select(x => new UserWithRequestStatusVieModel
                 {

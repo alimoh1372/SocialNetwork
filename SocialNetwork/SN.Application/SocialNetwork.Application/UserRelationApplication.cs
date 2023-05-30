@@ -91,5 +91,10 @@ namespace SocialNetwork.Application
         {
             return await _userRelationRepository.GetFriendsOfUser(userId);
         }
+
+        public async Task<int> GetNumberOfMutualFriend(long currentUserId, long friendUserId)
+        {
+            return await _userRelationRepository.GetMutualFriendNumber(currentUserId, friendUserId);
+        }
     }
 }

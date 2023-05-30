@@ -63,8 +63,10 @@ namespace ServiceHosts.Hubs
 
             if (result.IsSuccedded)
             {
+                var countMutualFriend =
+                  await  _userRelationApplication.GetNumberOfMutualFriend(currentUserId, userIdRequestSentFromIt);
                 await Clients.Users(currentUserId.ToString(), userIdRequestSentFromIt.ToString())
-                    .SendAsync("handleAfterAcceptedRequest", userIdRequestSentFromIt, currentUserId);
+                    .SendAsync("handleAfterAcceptedRequest", userIdRequestSentFromIt, currentUserId,countMutualFriend);
                 return;
             }
 
