@@ -13,13 +13,15 @@ namespace _00_Framework.Application
         /// </summary>
         private const int SaltSize = 16; // 128 bit 
         private const int KeySize = 32; // 256 bit
+        private HashingOptions Options { get; }//Get the iteration
+
 
         public PasswordHasher(IOptions<HashingOptions> options)
         {
             Options = options.Value;
         }
 
-        private HashingOptions Options { get; }
+       
 
 
         /// <summary>

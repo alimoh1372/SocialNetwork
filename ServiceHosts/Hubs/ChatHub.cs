@@ -14,6 +14,9 @@ using JsonSerializer = System.Text.Json.JsonSerializer;
 
 namespace ServiceHosts.Hubs
 {
+    /// <summary>
+    /// Handling signalR in server side
+    /// </summary>
     [Authorize]
     public class ChatHub : Hub
     {
@@ -24,7 +27,12 @@ namespace ServiceHosts.Hubs
             _userRelationApplication = userRelationApplication;
             _messageApplication = messageApplication;
         }
-
+        /// <summary>
+        /// Make request and send result to the front end side
+        /// </summary>
+        /// <param name="currentUserId">Id of user that want to make a relation</param>
+        /// <param name="requestSendToId">Id of user that relationship request will send to </param>
+        /// <param name="relationMessage">a message that send with the relation request from <paramref name="currentUserId"/> </param>
         public async void SendUserRelationRequest(long currentUserId, long requestSendToId,string relationMessage)
         {
             CreateUserRelation relation = new CreateUserRelation
@@ -34,6 +42,7 @@ namespace ServiceHosts.Hubs
                 RelationRequestMessage = relationMessage
             };
             var result = _userRelationApplication.Create(relation);
+            //if the relation made successfully so send an update request to the front side
             if (result.IsSuccedded)
             {
                 try
@@ -50,12 +59,17 @@ namespace ServiceHosts.Hubs
                 }
 
             }
-
-            if (result.IsSuccedded)
+            //if the relation didn't make successfully so send the error message to the front side
+            if (!result.IsSuccedded)
                 await Clients.Caller.SendAsync("ShowError", result.Message);
 
         }
-
+        /// <summary>
+        /// operate the accept operation by User id that request sent to <paramref name="userIdRequestSentFromIt"/>
+        /// </summary>
+        /// <param name="currentUserId"></param>
+        /// <param name="userIdRequestSentFromIt"></param>
+        /// <returns></returns>
         public async Task AcceptRequest(long currentUserId, long userIdRequestSentFromIt)
         {
 
@@ -73,7 +87,15 @@ namespace ServiceHosts.Hubs
             if (!result.IsSuccedded)
                 await Clients.Caller.SendAsync("ShowError", result.Message);
         }
-
+        /// <summary>
+        /// handle the messaging operation
+        /// <br/>message send from User with id <paramref name="fromUserId"/> to user with id <paramref name="toUserId"/>
+        /// <br/> message content=<paramref name="message"/>
+        /// </summary>
+        /// <param name="fromUserId"></param>
+        /// <param name="toUserId"></param>
+        /// <param name="message"></param>
+        /// <returns></returns>
         public async Task SendMessage(long fromUserId, long toUserId, string message)
         {
 

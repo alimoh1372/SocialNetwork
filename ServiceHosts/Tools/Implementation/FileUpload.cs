@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace ServiceHosts.Tools
 {
+
     public class FileUpload :IFileUpload
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
@@ -13,7 +14,7 @@ namespace ServiceHosts.Tools
         {
             _webHostEnvironment = webHostEnvironment;
         }
-
+        
         public string UploadFile(IFormFile file, string path)
         {
             if (file ==null)

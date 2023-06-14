@@ -62,7 +62,16 @@ namespace ServiceHosts
             //To support the persian words in client side
             services.AddSingleton(HtmlEncoder.Create(UnicodeRanges.BasicLatin, UnicodeRanges.Arabic));
 
+            //TODO:Add CORS 
 
+            //To set the Authentication policy to some pages,folder ,...
+            services.AddRazorPages()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AuthorizePage("/ChatPage", "ChatPage");
+                    options.Conventions.AuthorizePage("/EditProfilePicture", "EditProfilePicture");
+                    options.Conventions.AuthorizeFolder("/Hubs", "ChatHub");
+                });
             //Define the policy needed 
             services.AddAuthorization(options =>
             {
@@ -70,15 +79,11 @@ namespace ServiceHosts
                     builder => builder.RequireClaim("UserId"));
                 options.AddPolicy("ChatHub",
                    builder => builder.RequireClaim("UserId"));
+                options.AddPolicy("EditProfilePicture"
+                    ,builder=>builder.RequireClaim("UserId"));
             });
 
-            //To set the Authentication policy to some pages,folder ,...
-            services.AddRazorPages()
-                .AddRazorPagesOptions(options =>
-                {
-                    options.Conventions.AuthorizePage("/ChatPage", "ChatPage");
-                    options.Conventions.AuthorizeFolder("/Hubs", "ChatHub");
-                });
+           
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
