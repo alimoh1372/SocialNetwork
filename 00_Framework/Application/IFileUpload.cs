@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 
-namespace _0_Framework.Application
+namespace _00_Framework.Application
 {
     /// <summary>
     /// Helping to upload files to server

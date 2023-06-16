@@ -84,13 +84,23 @@ function EditMessage(message) {
         return;
     }
     let messageBodyText = messageDiv.getElementsByClassName('text')[0];
+
+    //Delete text area after saving 
     messageBodyText.textContent = message.messageContent;
+    let editMessageDiv = messageDiv.querySelector('div[data-editMessage]');
+    editMessageDiv.remove();
 }
 
 //Add new message(Json) to chat history
 function addNewMessageToChatHistoryUlEl(message) {
     let newMessage = JSON.parse(message);
-    appendChatItem(newMessage);
+    //Check if the active user id is that user send message then add message Item
+    if ((currentUserId == newMessage.FkFromUserId && activeUserIdToChat == newMessage.FkToUserId) ||
+        (currentUserId == newMessage.FkToUserId && activeUserIdToChat == newMessage.FkFromUserId)) {
+        appendChatItem(newMessage);
+    } else {
+        AlertError("You Have a message from:" + newMessage.SenderFullName);
+    }
 }
 //Handle the   handleAfterAcceptedRequest 
 
@@ -307,6 +317,7 @@ function CreateMessageBoyDiv(message) {
     messageNameDiv.textContent = message.SenderFullName;
     messageBodyDiv.appendChild(messageNameDiv);
     let messageTimeDiv = document.createElement('div');
+    messageTimeDiv.setAttribute('data-utcdate', message.CreationDate);
     messageTimeDiv.classList.add('time', 'hidden-xs');
     messageTimeDiv.textContent = moment(message.CreationDate).fromNow();
     messageBodyDiv.appendChild(messageTimeDiv);
@@ -351,6 +362,7 @@ function CreateMessageBoyDiv(message) {
                         let editMessageContent = textArea.value;
                         let messageId = message.Id;
                         chatConnection.invoke('EditMessage', messageId, editMessageContent);
+
                     });
                 messageBodyDiv.appendChild(editMessageContentDiv);
             });
@@ -535,6 +547,17 @@ function getAllFriendsOf(userId) {
     });
 }
 
+//Update every message time from now
+function updateMessageTime() {
+    var times = document.querySelectorAll("div[data-utcdate]");
+    for (var i = 0; i < times.length; i++) {
+        let time = times[i];
+        let utcTime = time.getAttribute("data-utcdate");
+        time.textContent = moment(utcTime).fromNow();
+    }
+}
+
+
 //Doing on content loaded operations start hub connection get needed element and add eventlistener to some
 function ready() {
 
@@ -630,6 +653,9 @@ function ready() {
                 handleAcceptRequestButton(currentUserId, userIdRequestFrom);
             });
     });
+
+    //Update message time every 1 minute
+    setInterval(updateMessageTime, 60000);
 }
 
 document.addEventListener('DOMContentLoaded', ready);

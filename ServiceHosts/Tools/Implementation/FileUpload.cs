@@ -1,9 +1,9 @@
 ﻿using System.IO;
-using _0_Framework.Application;
+using _00_Framework.Application;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 
-namespace ServiceHosts.Tools
+namespace ServiceHosts.Tools.Implementation
 {
 
     public class FileUpload :IFileUpload

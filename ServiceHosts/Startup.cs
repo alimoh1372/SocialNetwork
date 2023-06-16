@@ -6,7 +6,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
-using _0_Framework.Application;
 using _00_Framework.Application;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
@@ -31,10 +30,10 @@ namespace ServiceHosts
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            // string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
-          string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
+             string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringHome");
+        //  string connectionString = Configuration.GetConnectionString("socialNetworkConnectionStringNoc");
             SocialNetworkBootstrapper.Configure(services,connectionString);
-
+          
             //wire up and register the needed services
             services.AddSingleton<IPasswordHasher, PasswordHasher>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -109,7 +108,7 @@ namespace ServiceHosts
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                
+               
 
                 //Define the signalR route
                 endpoints.MapHub<ChatHub>("/chatHub");

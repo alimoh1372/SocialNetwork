@@ -10,10 +10,10 @@ using SocialNetwork.Application.Contracts.UserContracts;
 
 namespace ServiceHosts.Pages
 {
-    [Authorize]
+    
     public class EditProfilePictureModel : PageModel
     {
-        [TempData] public string Message { get; set; }
+        
         public EditProfilePicture EditProfilePicture { get; set; }
         private readonly IUserApplication _userApplication;
 
@@ -33,7 +33,7 @@ namespace ServiceHosts.Pages
             if (result.IsSuccedded)
                 return RedirectToPage("/ChatPage");
 
-            Message = result.Message;
+           
             return Page();
         }
     }

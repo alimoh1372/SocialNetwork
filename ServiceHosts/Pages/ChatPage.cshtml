@@ -30,7 +30,7 @@
             <div class="main-box clearfix">
                 <div class="profile-header">
                     <h3><span>User info</span></h3>
-                    <a asp-page="./EditProfilePicture" asp-route-id="@Model.UserInfo.Id" class="btn btn-primary edit-profile">
+                    <a asp-page="/EditProfilePicture" asp-route-id="@Model.UserInfo.Id" class="btn btn-primary pull-right" style="margin-left: 2px;" target="_self">
                         <i class="fa fa-pencil-square fa-lg"></i> Edit profile Picture
                     </a>
                     <a id="btnRefresh" asp-page="/ChatPage" class="btn btn-info pull-right">
