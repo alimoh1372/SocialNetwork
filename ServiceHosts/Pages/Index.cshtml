@@ -16,13 +16,13 @@
     <div class="signup">
         <form method="post" asp-page-handler="Register">
             <label for="chk" aria-hidden="true">Sign up</label>
-            @if (Model.RegisterMessage != null)
+            @if (Model.SuccessMessage != null)
             {
-                <div class="alert alert-danger">@Model.RegisterMessage</div>
+                <div class="alert alert-success">@Model.SuccessMessage</div>
             }
-            @if (Model.LoginMessage != null)
+            @if (Model.ErrorMessage != null)
             {
-                <div class="alert alert-danger">@Model.LoginMessage</div>
+                <div class="alert alert-danger">@Model.ErrorMessage</div>
             }
             <input type="text" name="Name" placeholder="Enter First Name" required="">
             <input type="text" name="LastName" placeholder="Enter Last name" required="">

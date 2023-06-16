@@ -13,14 +13,14 @@ namespace ServiceHosts.Pages
     public class IndexModel : PageModel
     {
         [TempData]
-        public string LoginMessage { get; set; }
+        public string ErrorMessage { get; set; }
 
         [TempData]
-        public string RegisterMessage { get; set; }
+        public string SuccessMessage { get; set; }
 
         private readonly IUserApplication _userApplication;
         private readonly ILogger<IndexModel> _logger;
-        
+
         public IndexModel(ILogger<IndexModel> logger, IUserApplication userApplication)
         {
             _logger = logger;
@@ -30,13 +30,15 @@ namespace ServiceHosts.Pages
         {
 
         }
-        public  IActionResult OnPostLogin(Login command)
+        public IActionResult OnPostLogin(Login command)
         {
             var result = _userApplication.Login(command);
-            if ( result.IsSuccedded)
+            if (result.IsSuccedded)
+            {
                 return RedirectToPage("/ChatPage");
+            }
 
-            LoginMessage = result.Message;
+            ErrorMessage = result.Message;
             return RedirectToPage("/Index");
         }
         public IActionResult OnGetLogout()
@@ -47,11 +49,26 @@ namespace ServiceHosts.Pages
         public IActionResult OnPostRegister(CreateUser command)
         {
             var result = _userApplication.Create(command);
-            RegisterMessage = result.Message;
+            SuccessMessage = result.Message;
             if (result.IsSuccedded)
-                return RedirectToPage("/ChatPage");
+            {
+                var loginCommand = new Login
+                {
+                    UserName = command.Email,
+                    Password = command.Password
+                };
+                result = _userApplication.Login(loginCommand);
+
+                if (result.IsSuccedded)
+                    return RedirectToPage("/ChatPage");
+                
+                SuccessMessage = "Signed up successfully please now login...";
+                return RedirectToPage("/Index");
+            }
+
+            ErrorMessage = "There is an error please try again...";
             return RedirectToPage("/Index");
         }
-       
+
     }
 }
