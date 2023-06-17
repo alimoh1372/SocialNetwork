@@ -104,7 +104,7 @@ function addNewMessageToChatHistoryUlEl(message) {
 }
 //Handle the   handleAfterAcceptedRequest 
 
-function handleAfterAcceptedRequest(userIdReuestSentFromIt, userIdRequestAcceptByIt,countMutualFriend) {
+function handleAfterAcceptedRequest(userIdReuestSentFromIt, userIdRequestAcceptByIt, countMutualFriend) {
     //check if currentTableRowInAllUsersWorkOnIt isn't null or more than one
     //if it is so set currentTableRowInAllUsersWorkOnIt
     if (!(currentTableRowInAllUsersWorkOnIt && currentTableRowInAllUsersWorkOnIt.length == 1)) {
@@ -145,7 +145,7 @@ function ChangeTheStatusToFriend(_currentTableRowInAllUsersWorkOnIt) {
 //method Add new friend on friend tab that on page load functionaly add accepted users to the friend tab
 
 function AddNewItemToFriends(_name, _userId) {
-    
+
     let newFiriendLiEl = document.createElement('li');
     newFiriendLiEl.classList.add("col-md-6");
     newFiriendLiEl.setAttribute('data-friendUserId', _userId);
@@ -158,8 +158,8 @@ function AddNewItemToFriends(_name, _userId) {
     image.src = "/Images/DefaultProfile.png";
     div.appendChild(image);
     newFiriendLiEl.appendChild(div);
-    var html = newFiriendLiEl.innerHTML + '<div class="details"><div class="name row"><span class="col-md-8">' + _name + '</span><span class="col-md-4">Mutual Friend:'+mutualfriendNumber+'</span></div></div>' +
-        '<div class="type row"><a data-sendMessage=' + _userId + ' class="btn btn-success" > <i class="fa fa-send" style="color: #9400d3"></i> Send Message</a ><a data-FriendsOfFriend="'+_userId+'" class="btn btn-primary"><i class="fa fa-users" style="color: #40e0d0"></i> Show friends</a></div>';
+    var html = newFiriendLiEl.innerHTML + '<div class="details"><div class="name row"><span class="col-md-8">' + _name + '</span><span class="col-md-4">Mutual Friend:' + mutualfriendNumber + '</span></div></div>' +
+        '<div class="type row"><a data-sendMessage=' + _userId + ' class="btn btn-success" > <i class="fa fa-send" style="color: #9400d3"></i> Send Message</a ><a data-FriendsOfFriend="' + _userId + '" class="btn btn-primary"><i class="fa fa-users" style="color: #40e0d0"></i> Show friends</a></div>';
     newFiriendLiEl.innerHTML = html;
 
 
@@ -172,7 +172,7 @@ function AddNewItemToFriends(_name, _userId) {
     addEventListenerToFriendLiElMessageButton(newFiriendLiEl);
     //Add eventListener to the Show friend button 
     addEventListenerToFriendLiElShowFriendButton(newFiriendLiEl);
-    
+
 }
 
 
@@ -180,15 +180,15 @@ function AddNewItemToFriends(_name, _userId) {
 function addEventListenerToFriendLiElShowFriendButton(friendEl) {
     let anchorFriendsOfFriend = friendEl.querySelector('a[data-FriendsOfFriend]');
     let friendUserId = anchorFriendsOfFriend.getAttribute('data-FriendsOfFriend');
-        if (!friendUserId)
-            return;
+    if (!friendUserId)
+        return;
     anchorFriendsOfFriend.addEventListener('click',
-            (e) => {
-                e.preventDefault();
-                removeAllChildren(tbodyFriendsOfFriend);
-                SwitchTabTo("#tab-FriendsOfFriend");
-                getAllFriendsOf(friendUserId);
-            });
+        (e) => {
+            e.preventDefault();
+            removeAllChildren(tbodyFriendsOfFriend);
+            SwitchTabTo("#tab-FriendsOfFriend");
+            getAllFriendsOf(friendUserId);
+        });
 }
 
 
@@ -345,6 +345,10 @@ function CreateMessageBoyDiv(message) {
         messageEditBtn.addEventListener('click',
             function (e) {
                 e.preventDefault();
+                let editMessage = document.querySelector("div.text[data-editMessage='" + message.Id + "']");
+                if (editMessage) 
+                    return;
+                
                 editMessageContentDiv = document.createElement('div');
                 editMessageContentDiv.classList.add('text');
                 let textArea = document.createElement('textarea');
@@ -405,7 +409,7 @@ function SwitchTabTo(liHrefAtt) {
 //Update All user table after request sent and be done successfully 
 //on user page that request sent to it 
 //Give the user id that request create by it
-function updateRequestRowAddAcceptButton(userIdRequestSentFromIt,relationMessage) {
+function updateRequestRowAddAcceptButton(userIdRequestSentFromIt, relationMessage) {
     //TODO:Adding message to the requestRevert
     const rows = document.querySelectorAll('tr[data-userid]');
     for (var i = 0; i < rows.length; i++) {
@@ -413,9 +417,9 @@ function updateRequestRowAddAcceptButton(userIdRequestSentFromIt,relationMessage
         if (useridAtt != '' && Number(useridAtt) === userIdRequestSentFromIt) {
             currentTableRowInAllUsersWorkOnIt = rows[i];
             let tds = rows[i].getElementsByTagName('td');
-           
+
             let requestMessage = relationMessage;
-            tds[2].innerHTML = "Request Message:"+requestMessage;
+            tds[2].innerHTML = "Request Message:" + requestMessage;
             tds[3].innerHTML = '<i class="text-warning fa fa-question-circle"></i> <span class="label label-warning">Request Came</span>';
             tds[4].innerHTML = '<td><a class="btn btn-success" data-acceptRequest=' + userIdRequestSentFromIt + '" href="">Accept</a></td>';
             let acceptButton = tds[4].querySelector('a[data-acceptRequest]');
@@ -433,7 +437,7 @@ function updateRequestRowAddAcceptButton(userIdRequestSentFromIt,relationMessage
 
 //Update current user row after send relation request on request sended to it
 function updateRequestRowAddPendingToIt(userIdRequestFromIt) {
-   
+
     const rows = document.querySelectorAll('tr[data-userid]')
     //let rows = document.querySelectorAll("tr[data-userid]");
     for (var i = 0; i < rows.length; i++) {
@@ -448,7 +452,7 @@ function updateRequestRowAddPendingToIt(userIdRequestFromIt) {
                 return;
             }
             let requestMessage = requestInput.value;
-            tds[2].innerHTML = "YourMessage:"+requestMessage;
+            tds[2].innerHTML = "YourMessage:" + requestMessage;
             tds[3].innerHTML = 'Request <span class="lable lable-warning">Pending...</span>';
             tds[4].innerHTML = '';
             break;
@@ -461,9 +465,9 @@ function AlertError(message) {
 }
 
 //InvokeSend Request from current user to the user Request Send To It
-function sendRequestOfRelationShip(currentUserId, userRequestSendToIt,requestMessage) {
+function sendRequestOfRelationShip(currentUserId, userRequestSendToIt, requestMessage) {
 
-    chatConnection.invoke('SendUserRelationRequest', currentUserId, userRequestSendToIt,requestMessage);
+    chatConnection.invoke('SendUserRelationRequest', currentUserId, userRequestSendToIt, requestMessage);
 
 }
 
@@ -621,13 +625,13 @@ function ready() {
     requestAnchors.forEach((item) => {
         item.addEventListener('click', function (e) {
             e.preventDefault();
-            
+
             var userRequestSendToIt = Number(e.target.getAttribute('data-requestedUserId'));
-            
+
             if (currentUserId == 0)
                 currentUserId = getCurrentUserId();
             var trElRequestRelationRow = document.querySelector('tr[data-userid="' + userRequestSendToIt + '"]');
-            if (!trElRequestRelationRow && trElRequestRelationRow.length!=1) {
+            if (!trElRequestRelationRow && trElRequestRelationRow.length != 1) {
                 AlertError("Cant find the tr of user:" + userRequestSendToIt + "please call administrator");
                 return;
             }
